@@ -25,6 +25,12 @@ namespace GIS_api.Controllers
             return await _subnetService.GetSubnetTree();
         }
 
+        [HttpGet("getsubnetdetail")]
+        public async Task<IEnumerable<SubnetIpDetail>> GetSubnetDetail(string subnet)
+        {
+            return await _subnetService.GetSubnetDetail(subnet);
+        }
+
         [HttpPost]        
         public async Task<ActionResult<long>> AddAbuseNeglect(SubnetsDTO obj)
         {

@@ -10,5 +10,6 @@ namespace GIS_api.Services.Interfaces
     {
         Task<int> AddSubnet(SubnetsDTO obj);
         Task<IEnumerable<SubnetTreeDto>> GetSubnetTree();
+        Task<IEnumerable<SubnetIpDetail>> GetSubnetDetail(string subnet);
     }
 }
