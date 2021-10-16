@@ -1,16 +1,13 @@
 ﻿using AutoMapper;
 using IPAM_Api.Services.Interfaces;
+using IPAM_Common;
+using IPAM_Common.DTOs;
 using IPAM_Common.DTOs.Subnet;
 using IPAM_Repo.Interfaces;
 using IPAM_Repo.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Net;
-using System.Runtime.InteropServices;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 
 namespace IPAM_Api.Services
@@ -18,20 +15,50 @@ namespace IPAM_Api.Services
     public class SubnetService : ISubnetService
     {
         private readonly IMapper _mapper;
-        private readonly ISubnetRepository _subnetRepository;
+        private readonly ISubnetRepository _subnetRepository;        
 
         public SubnetService(            
           IMapper mapper,
-          ISubnetRepository subnetRepository
+          ISubnetRepository subnetRepository          
           ) : base()
         {
             _mapper = mapper;
-            _subnetRepository = subnetRepository;
+            _subnetRepository = subnetRepository;            
         }
 
         public async Task<Guid> AddSubnet(SubnetDto subnetDto)
         {
             return await _subnetRepository.Create(_mapper.Map<Subnet>(subnetDto));
+        }
+
+
+        public async Task<TracertResponseDto> TraceRoute(string ipAddress)
+        {
+            TracertResponseDto tracertResponse = new TracertResponseDto();
+            var traceRoute = IPHelper.TraceRoute(ipAddress, 3, 1000);
+            if (traceRoute.Any(t => t.Status == IPStatus.Success))
+            {
+                tracertResponse = traceRoute
+                    .GroupBy(t => t.Address)
+                    .Select(c => new TracertResponseDto()
+                    {
+                        DNSName = c.FirstOrDefault().Hostname,
+                        Hop = c.FirstOrDefault().Hop,
+                        IPAddress = c.LastOrDefault().Address,
+                        ResponseTime1 = c.FirstOrDefault(x => x.Hop == 1).ResponseTime,
+                        ResponseTime2 = c.FirstOrDefault(x => x.Hop == 2).ResponseTime,
+                        ResponseTime3 = c.FirstOrDefault(x => x.Hop == 2).ResponseTime,
+                        Status = true
+                    }).FirstOrDefault();
+            }
+
+            return tracertResponse;
+        }
+
+
+        public async Task<PingReplyDto> Ping(string ipAddress)
+        {
+            return _mapper.Map<PingReplyDto>(await IPHelper.Ping(ipAddress));
         }
 
         //public async Task<IEnumerable<SubnetTreeDto>> GetSubnetTree()
