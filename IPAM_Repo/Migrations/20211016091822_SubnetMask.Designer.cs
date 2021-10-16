@@ -3,35 +3,23 @@ using System;
 using IPAM_Repo;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IPAM_Repo.Migrations
 {
     [DbContext(typeof(IPAMDbContext))]
-    partial class IPAMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211016091822_SubnetMask")]
+    partial class SubnetMask
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-            modelBuilder.Entity("IPAM_Repo.Models.ServerType", b =>
-                {
-                    b.Property<Guid>("ServerTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("ServerTypeId");
-
-                    b.ToTable("ServerType");
-                });
 
             modelBuilder.Entity("IPAM_Repo.Models.Subnet", b =>
                 {

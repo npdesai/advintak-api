@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using IPAM_Api.Services.Interfaces;
 using IPAM_Common.DTOs.Master;
+using IPAM_Common.DTOs.Subnet;
 using IPAM_Repo.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace IPAM_Api.Services
@@ -24,7 +22,6 @@ namespace IPAM_Api.Services
             _mapper = mapper;
         }
 
-
         public async Task<List<SubnetGroupDto>> GetSubnetGroups()
         {
              var subnetGroups = await _masterDataRepository.GetSubnetGroups();            
@@ -36,7 +33,21 @@ namespace IPAM_Api.Services
         {
             var subnetMasks = await _masterDataRepository.GetSubnetMasks();
 
-            return _mapper.Map<List<SubnetMaskDto>>(subnetMasks);
+            var subnetMaskData = _mapper.Map<List<SubnetMaskDto>>(subnetMasks);
+
+            foreach (SubnetMaskDto subnetMask in subnetMaskData)
+            {
+                subnetMask.DisplaySubnetMask = $"{subnetMask.NetMask}{subnetMask.CIDR}-{subnetMask.Hosts} Hosts";
+            }
+
+            return subnetMaskData;
+        }
+
+        public async Task<List<ServerTypeDto>> GetServerTypes()
+        {
+            var serverTypes = await _masterDataRepository.GetServerTypes();
+
+            return _mapper.Map<List<ServerTypeDto>>(serverTypes);
         }
     }
 }

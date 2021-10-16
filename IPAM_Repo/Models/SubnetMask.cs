@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace IPAM_Repo.Models
 {
@@ -12,7 +9,10 @@ namespace IPAM_Repo.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public Guid MaskId { get; set; }
-        public string MaskName { get; set; }
-        public string MaskDescription { get; set; }
+        public string Class { get; set; }
+        public int Addresses { get; set; }
+        public string CIDR { get; set; }
+        public int Hosts { get; set; }
+        public string NetMask { get; set; }
     }
 }

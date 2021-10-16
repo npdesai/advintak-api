@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IPAM_Common.DTOs.Master
+namespace IPAM_Common.DTOs.Subnet
 {
     public class SubnetGroupDto
     {

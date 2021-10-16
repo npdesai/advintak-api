@@ -1,5 +1,6 @@
 ﻿using IPAM_Api.Services.Interfaces;
 using IPAM_Common.DTOs.Master;
+using IPAM_Common.DTOs.Subnet;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -40,6 +41,18 @@ namespace IPAM_Api.Controllers
         public async Task<List<SubnetMaskDto>> GetSubnetMasks()
         {
             return await _masterService.GetSubnetMasks();
+        }
+
+        /// <summary>
+        /// Get Server Types
+        /// </summary>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(List<ServerTypeDto>), StatusCodes.Status200OK)]
+        [Route("api/Master/ServerTypes", Name = "Get Server Types")]
+        [HttpGet]
+        public async Task<List<ServerTypeDto>> GetServerTypes()
+        {
+            return await _masterService.GetServerTypes();
         }
     }
 }

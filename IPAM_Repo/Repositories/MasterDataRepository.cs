@@ -1,10 +1,7 @@
 ﻿using IPAM_Repo.Interfaces;
 using IPAM_Repo.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace IPAM_Repo.Repositories
@@ -26,6 +23,11 @@ namespace IPAM_Repo.Repositories
         public async Task<List<SubnetMask>> GetSubnetMasks()
         {
             return await _dbContext.SubnetMask.ToListAsync();
+        }
+
+        public async Task<List<ServerType>> GetServerTypes()
+        {
+            return await _dbContext.ServerType.ToListAsync();
         }
     }
 }

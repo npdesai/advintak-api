@@ -1,5 +1,6 @@
 using IPAM_Common;
 using IPAM_Repo;
+using IPAM_Repo.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -24,6 +25,7 @@ namespace IPAM_Api
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            MemCache.SetConfiguration(Configuration);
         }
 
         public IConfiguration Configuration { get; }
@@ -31,6 +33,9 @@ namespace IPAM_Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
+            services.Configure<AppSettingsConfig>(Configuration.GetSection("AppSettings"));
+
             services.AddSingleton(Configuration);
             services.AddAutoMapper(typeof(Startup), typeof(MappingEntity));
 
@@ -53,6 +58,8 @@ namespace IPAM_Api
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IPAMDbContext dbContext)
         {
             dbContext.Database.Migrate();
+            //Save MasterData
+            new SeederRepository(dbContext).SeedData();
 
             if (env.IsDevelopment())
             {

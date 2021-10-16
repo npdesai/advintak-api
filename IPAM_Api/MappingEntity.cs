@@ -2,13 +2,8 @@
 using IPAM_Common.DTOs.Master;
 using IPAM_Common.DTOs.Subnet;
 using IPAM_Repo.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace IPAM_Common
+namespace IPAM_Api
 {
     public class MappingEntity : Profile
     {
@@ -17,6 +12,7 @@ namespace IPAM_Common
             CreateMap<Subnet, SubnetDto>().ReverseMap();
             CreateMap<SubnetGroup, SubnetGroupDto>().ReverseMap();
             CreateMap<SubnetMask, SubnetMaskDto>().ReverseMap();
+            CreateMap<ServerType, ServerTypeDto>().ReverseMap();
         }
     }
 }
