@@ -8,7 +8,8 @@ namespace IPAM_Common
         {
             Ping ping = new Ping();
             PingReply pingresult = ping.Send(ip);
-            if (pingresult.Status.ToString() == "Success")
+
+            if (pingresult.Status == IPStatus.Success)
             {
                 return true;
             }
