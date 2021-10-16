@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPAM_Api", "IPAM_Api\IPAM_Api.csproj", "{952A9D79-A287-4D2C-8971-E9616A867DBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPAM_Repo", "IPAM_Repo\IPAM_Repo.csproj", "{AF580CB8-9238-43F7-AC68-8185D4F0F7BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPAM_Common", "IPAM_Common\IPAM_Common.csproj", "{61A93DF4-3703-49B6-B02C-6B04D5435697}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{952A9D79-A287-4D2C-8971-E9616A867DBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{952A9D79-A287-4D2C-8971-E9616A867DBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{952A9D79-A287-4D2C-8971-E9616A867DBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{952A9D79-A287-4D2C-8971-E9616A867DBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF580CB8-9238-43F7-AC68-8185D4F0F7BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF580CB8-9238-43F7-AC68-8185D4F0F7BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF580CB8-9238-43F7-AC68-8185D4F0F7BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF580CB8-9238-43F7-AC68-8185D4F0F7BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61A93DF4-3703-49B6-B02C-6B04D5435697}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61A93DF4-3703-49B6-B02C-6B04D5435697}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61A93DF4-3703-49B6-B02C-6B04D5435697}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61A93DF4-3703-49B6-B02C-6B04D5435697}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {06F99433-7698-4B4B-8157-088C63E71176}
+	EndGlobalSection
+EndGlobal
