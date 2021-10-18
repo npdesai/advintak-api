@@ -30,22 +30,6 @@ namespace IPAM_Repo.Repositories
                 throw new ValidationException("SubnetAddress can't null");
             }
 
-            if (!string.IsNullOrEmpty(subnet.SubnetGroup.GroupName))
-            {
-                SubnetGroup subnetGroup = new SubnetGroup()
-                {
-                    GroupName = subnet.SubnetGroup.GroupName
-                };
-
-                await _dbContext.SubnetGroup.AddAsync(subnetGroup);
-                await _dbContext.SaveChangesAsync();
-                subnet.SubnetGroupId = subnetGroup.GroupId;
-            }
-            else
-            {
-                throw new ValidationException("SubnetGroupName can't null");
-            }
-
             await _dbContext.Subnet.AddAsync(subnet);
             await _dbContext.SaveChangesAsync();
 

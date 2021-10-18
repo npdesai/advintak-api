@@ -24,7 +24,7 @@ namespace IPAM_Api.Controllers
         /// </summary>
         /// <returns></returns>
         [ProducesResponseType(typeof(List<SubnetGroupDto>), StatusCodes.Status200OK)]
-        [Route("api/Master/SubnetGroups", Name = "Get Subnet Groups")]
+        [Route("SubnetGroups", Name = "Get Subnet Groups")]
         [HttpGet]
         public async Task<List<SubnetGroupDto>> GetSubnetGroups()
         {
@@ -36,7 +36,7 @@ namespace IPAM_Api.Controllers
         /// </summary>
         /// <returns></returns>
         [ProducesResponseType(typeof(List<SubnetMaskDto>), StatusCodes.Status200OK)]
-        [Route("api/Master/SubnetMasks", Name = "Get Subnet Masks")]
+        [Route("SubnetMasks", Name = "Get Subnet Masks")]
         [HttpGet]
         public async Task<List<SubnetMaskDto>> GetSubnetMasks()
         {
@@ -48,7 +48,7 @@ namespace IPAM_Api.Controllers
         /// </summary>
         /// <returns></returns>
         [ProducesResponseType(typeof(List<ServerTypeDto>), StatusCodes.Status200OK)]
-        [Route("api/Master/ServerTypes", Name = "Get Server Types")]
+        [Route("ServerTypes", Name = "Get Server Types")]
         [HttpGet]
         public async Task<List<ServerTypeDto>> GetServerTypes()
         {

@@ -15,6 +15,7 @@ namespace IPAM_Repo
         public DbSet<SubnetGroup> SubnetGroup { get; set; }
         public DbSet<SubnetMask> SubnetMask { get; set; }
         public DbSet<ServerType> ServerType { get; set; }
+        public DbSet<SubnetIP> SubnetIP { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

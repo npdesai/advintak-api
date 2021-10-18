@@ -26,7 +26,6 @@ namespace IPAM_Api.Controllers
         /// <returns></returns>
         [ProducesResponseType(typeof(List<SubnetTreeDto>), StatusCodes.Status200OK)]        
         [HttpGet]
-        [Route("api/Tree", Name = "Get Tree")]
         public async Task<List<SubnetTreeDto>> GetSubnetTree()
         {
             return await _treeService.GetSubnetTree();

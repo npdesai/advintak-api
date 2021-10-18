@@ -42,6 +42,14 @@ namespace IPAM_Api
             services.RegisterIPAMServices();
             services.RegisterIPAMRepositories();
 
+            services.AddCors(option =>
+            {
+                option.AddDefaultPolicy(b =>
+                {
+                    b.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
+                });
+            });
+
             services.AddControllers();
             services.AddDbContext<IPAMDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddSwaggerGen(c =>
@@ -73,6 +81,7 @@ namespace IPAM_Api
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseCors();
 
             app.UseEndpoints(endpoints =>
             {

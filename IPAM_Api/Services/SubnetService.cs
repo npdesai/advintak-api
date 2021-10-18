@@ -15,19 +15,49 @@ namespace IPAM_Api.Services
     public class SubnetService : ISubnetService
     {
         private readonly IMapper _mapper;
-        private readonly ISubnetRepository _subnetRepository;        
+        private readonly ISubnetRepository _subnetRepository;
+        private readonly IMasterDataRepository _masterDataRepository;
+        private readonly ISubnetIpRepository _subnetIpRepository;
 
         public SubnetService(            
           IMapper mapper,
-          ISubnetRepository subnetRepository          
+          ISubnetRepository subnetRepository,
+          IMasterDataRepository masterDataRepository,
+          ISubnetIpRepository subnetIpRepository
           ) : base()
         {
             _mapper = mapper;
-            _subnetRepository = subnetRepository;            
+            _subnetRepository = subnetRepository;
+            _masterDataRepository = masterDataRepository;
+            _subnetIpRepository = subnetIpRepository;
         }
 
         public async Task<Guid> AddSubnet(SubnetDto subnetDto)
         {
+            if (subnetDto.SubnetGroupId == null)
+            {
+                SubnetGroup subnetGroup = new SubnetGroup()
+                {
+                    GroupName = subnetDto.SubnetGroupName
+                };
+
+                subnetDto.SubnetGroupId = await _masterDataRepository.AddGroup(subnetGroup);
+            }
+
+            var mask = await _masterDataRepository.GetSubnetMasksById(subnetDto.SubnetMaskId);
+            if (mask != null)
+            {
+                for(int i=0; i <= mask.Addresses; i++)
+                {
+                    SubnetIP subnetIP = new SubnetIP()
+                    {
+                        IPAddress = subnetDto.SubnetAddress
+                    };
+
+                   await _subnetIpRepository.Create(subnetIP);
+                }
+            }
+
             return await _subnetRepository.Create(_mapper.Map<Subnet>(subnetDto));
         }
 

@@ -7,7 +7,7 @@ namespace IPAM_Common.DTOs.Subnet
 {
     public class SubnetGroupDto
     {
-        public int GroupId { get; set; }
+        public Guid GroupId { get; set; }
         public string GroupName { get; set; }
         public string GroupAddress { get; set; }
     }

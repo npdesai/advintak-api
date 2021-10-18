@@ -12,5 +12,7 @@ namespace IPAM_Repo.Interfaces
         Task<List<SubnetGroup>> GetSubnetGroups();
         Task<List<SubnetMask>> GetSubnetMasks();
         Task<List<ServerType>> GetServerTypes();
+        Task<Guid> AddGroup(SubnetGroup subnetGroup);
+        Task<SubnetMask> GetSubnetMasksById(Guid maskId);
     }
 }

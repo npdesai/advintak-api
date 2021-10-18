@@ -40,8 +40,7 @@ namespace IPAM_Repo.Migrations
                     SubnetId = table.Column<Guid>(type: "uuid", nullable: false),
                     SubnetGroupId = table.Column<Guid>(type: "uuid", nullable: false),
                     SubnetAddress = table.Column<string>(type: "text", nullable: true),
-                    SubnetMaskId = table.Column<int>(type: "integer", nullable: false),
-                    SubnetMaskMaskId = table.Column<Guid>(type: "uuid", nullable: false),
+                    SubnetMaskId = table.Column<Guid>(type: "uuid", nullable: false),                    
                     SubnetName = table.Column<string>(type: "text", nullable: true),
                     SubnetDescription = table.Column<string>(type: "text", nullable: true),
                     VlanName = table.Column<string>(type: "text", nullable: true),
@@ -57,8 +56,8 @@ namespace IPAM_Repo.Migrations
                         principalColumn: "GroupId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Subnet_SubnetMask_SubnetMaskMaskId",
-                        column: x => x.SubnetMaskMaskId,
+                        name: "FK_Subnet_SubnetMask_SubnetMaskId",
+                        column: x => x.SubnetMaskId,
                         principalTable: "SubnetMask",
                         principalColumn: "MaskId",
                         onDelete: ReferentialAction.Cascade);
@@ -70,9 +69,9 @@ namespace IPAM_Repo.Migrations
                 column: "SubnetGroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Subnet_SubnetMaskMaskId",
+                name: "IX_Subnet_SubnetMaskId",
                 table: "Subnet",
-                column: "SubnetMaskMaskId");
+                column: "SubnetMaskId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
