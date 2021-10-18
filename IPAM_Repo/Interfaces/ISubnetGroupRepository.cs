@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace IPAM_Repo.Interfaces
 {
-    public interface ISubnetRepository
+    public interface ISubnetGroupRepository
     {
-        Task<Guid> Create(Subnet subnet);
-        Task<List<Subnet>> GetSubnetsByGroupId(Guid subnetGroupId);
+        Task<List<SubnetGroup>> GetSubnetGroups();
     }
 }

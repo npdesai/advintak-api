@@ -14,6 +14,7 @@ namespace IPAM_Api
         {
             services.AddScoped<IMasterService, MasterService>();
             services.AddScoped<ISubnetService, SubnetService>();
+            services.AddScoped<ITreeService, TreeService>();
         }
     }
 }

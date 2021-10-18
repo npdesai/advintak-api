@@ -19,3 +19,4 @@ bin-release/
 .vs
 obj
 bin
+/IPAM_Api/IPAM_Api.csproj.user

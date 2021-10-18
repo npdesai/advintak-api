@@ -1,7 +1,10 @@
 ﻿using IPAM_Repo.Interfaces;
 using IPAM_Repo.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace IPAM_Repo.Repositories
@@ -13,6 +16,11 @@ namespace IPAM_Repo.Repositories
         public SubnetRepository(IPAMDbContext dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        public async Task<List<Subnet>> GetSubnetsByGroupId(Guid subnetGroupId)
+        {
+            return await _dbContext.Subnet.Where(s=>s.SubnetGroupId == subnetGroupId).ToListAsync();
         }
 
         public async Task<Guid> Create(Subnet subnet)

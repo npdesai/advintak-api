@@ -7,12 +7,12 @@ namespace IPAM_Common.DTOs.Subnet
 {
     public class SubnetTreeDto
     {
-        public string label { get; set; }
-        public string data { get; set; }
-        public string path { get; set; }
-        public string expandedIcon { get; set; }
-        public string collapsedIcon { get; set; }
-        public bool expanded { get; set; }
-        public IEnumerable<SubnetTreeDto> children { get; set; }
+        public string Label { get; set; }
+        public string Data { get; set; }
+        public string Path { get; set; }
+        public string ExpandedIcon { get; set; }
+        public string CollapsedIcon { get; set; }
+        public bool Expanded { get; set; }
+        public List<SubnetTreeDto> Children { get; set; }
     }
 }

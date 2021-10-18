@@ -1,4 +1,6 @@
-﻿using IPAM_Repo.Interfaces;
+﻿using IPAM_Api.Services;
+using IPAM_Api.Services.Interfaces;
+using IPAM_Repo.Interfaces;
 using IPAM_Repo.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,6 +12,7 @@ namespace IPAM_Api
         {
             services.AddScoped<IMasterDataRepository, MasterDataRepository>();
             services.AddScoped<ISubnetRepository, SubnetRepository>();
+            services.AddScoped<ISubnetGroupRepository, SubnetGroupRepository>();
         }
     }
 }
