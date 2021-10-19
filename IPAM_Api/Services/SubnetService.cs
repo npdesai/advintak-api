@@ -6,6 +6,7 @@ using IPAM_Common.DTOs.Subnet;
 using IPAM_Repo.Interfaces;
 using IPAM_Repo.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
@@ -44,21 +45,33 @@ namespace IPAM_Api.Services
                 subnetDto.SubnetGroupId = await _masterDataRepository.AddGroup(subnetGroup);
             }
 
+            string modifyIP = subnetDto.SubnetAddress.Split(".").Length >= 3 ?
+                                      string.Join(".", subnetDto.SubnetAddress.Split(".")[0],
+                                                      subnetDto.SubnetAddress.Split(".")[1],
+                                                      subnetDto.SubnetAddress.Split(".")[2]) :
+                                      subnetDto.SubnetAddress;
+
             var mask = await _masterDataRepository.GetSubnetMasksById(subnetDto.SubnetMaskId);
             if (mask != null)
             {
-                for(int i=0; i <= mask.Addresses; i++)
+                subnetDto.SubnetAddress = string.Join(".", modifyIP, "0") + mask.CIDR;
+                var subnetId = await _subnetRepository.Create(_mapper.Map<Subnet>(subnetDto));
+
+                for (int i=0; i <= mask.Addresses; i++)
                 {
                     SubnetIP subnetIP = new SubnetIP()
                     {
-                        IPAddress = subnetDto.SubnetAddress
+                        IPAddress = string.Join(".", modifyIP, i),
+                        SubnetId = subnetId
                     };
 
                    await _subnetIpRepository.Create(subnetIP);
                 }
+
+                return subnetId;
             }
 
-            return await _subnetRepository.Create(_mapper.Map<Subnet>(subnetDto));
+            return subnetDto.SubnetId;
         }
 
 
@@ -91,77 +104,28 @@ namespace IPAM_Api.Services
             return _mapper.Map<PingReplyDto>(await IPHelper.Ping(ipAddress));
         }
 
-        //public async Task<IEnumerable<SubnetTreeDto>> GetSubnetTree()
-        //{
-        //    List<SubnetTreeDto> subnetTreeList =  new List<SubnetTreeDto>();
-        //    IEnumerable <SubnetGroup> subnetGroupList = await _gisContext.SubnetGroup.OrderBy(o=>o.GroupId).ToListAsync();
 
-        //    if(subnetGroupList.Count() > 0)
-        //    {
-        //        foreach(SubnetGroup subnetGroup in subnetGroupList)
-        //        {
-        //            SubnetTreeDto subnetTree = new SubnetTreeDto(){
-        //                data = "Documents Folder",
-        //                label = subnetGroup.GroupName,
-        //                path = "/ipam/groups/" + subnetGroup.GroupId,
-        //                expandedIcon = "pi pi-folder-open",
-        //                collapsedIcon = "pi pi-folder",
-        //                expanded = true,
-        //                children = GetChildNodes(subnetGroup.GroupId)
-        //            };
+        public async Task<List<SubnetIP>> GetSubnetIPs(Guid subnetId)
+        {
+            List<SubnetIP> SubnetIpList = await _subnetIpRepository.GetIpListBySubnetId(subnetId);                       
 
-        //            subnetTreeList.Add(subnetTree);
-        //        }
-        //    }
+            return SubnetIpList;
+        }
 
-        //    return subnetTreeList;
-        //}
+        public async Task<bool> UpdateSubnetIpDetail(Guid subnetIpId)
+        {
+            SubnetIP subnetIP = await _subnetIpRepository.GetSubnetIpDetailById(subnetIpId);
+            if(subnetIP != null)
+            {
+                subnetIP.MacAddress = MacHelper.GetMACAddress(subnetIP.IPAddress);
+                subnetIP.Status = IPHelper.Ping(subnetIP.IPAddress).Result.Status == 0 ? "Used" : "Transient";
+                subnetIP.LastScan = DateTime.Now;
 
-        //public async Task<IEnumerable<SubnetIpDetail>> GetSubnetIPs(string subnet)
-        //{
-        //    List<SubnetIpDetail> SubnetIpList = new List<SubnetIpDetail>();
-        //    string subnetmask = string.Join(".",subnet.Split(".")[0],subnet.Split(".")[1],subnet.Split(".")[2]);
+               return await _subnetIpRepository.UpdateSubnetIpDetail(subnetIP);
+            }
 
-        //    if (!string.IsNullOrEmpty(subnetmask))
-        //    {
-        //       for(int i=1; i <= 254; i++)
-        //        {
-        //            SubnetIpDetail subnetIpDetail = new SubnetIpDetail() {
-        //                ipAddress = string.Join(".", subnetmask, i),
-        //                //macAddress = GetClientMAC(string.Join(".", subnetmask, i)),
-        //                //ipDNS = GetIP(string.Join(".", subnetmask, i))
-        //            };
+            return false;
+        }
 
-        //            SubnetIpList.Add(subnetIpDetail);
-        //        }
-        //    }
-
-        //    return SubnetIpList;
-        //}
-
-        //public IEnumerable<SubnetTreeDto> GetChildNodes(int subnetGroupId)
-        //{
-        //    List<SubnetTreeDto> subnetChildList = new List<SubnetTreeDto>();
-        //    IEnumerable<Subnets> SubnetsList = _gisContext.Subnets.Where(s=>s.SubnetGroupId == subnetGroupId).ToList();        
-
-        //    if (SubnetsList.Count() > 0)
-        //    {
-        //        foreach (Subnets subnets in SubnetsList)
-        //        {
-        //            SubnetTreeDto subnetTree = new SubnetTreeDto()
-        //            {
-        //                data = "Work Folder",
-        //                label = subnets.SubnetAddress,
-        //                path = "/ipam/subnets/" + subnets.SubnetAddress.Split("/")[0],
-        //                expandedIcon = "pi pi-cloud",
-        //                collapsedIcon = "pi pi-cloud"
-        //            };
-
-        //            subnetChildList.Add(subnetTree);
-        //        }
-        //    }
-
-        //    return subnetChildList;
-        //}
     }
 }

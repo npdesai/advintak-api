@@ -13,6 +13,7 @@ namespace IPAM_Api
             services.AddScoped<IMasterDataRepository, MasterDataRepository>();
             services.AddScoped<ISubnetRepository, SubnetRepository>();
             services.AddScoped<ISubnetGroupRepository, SubnetGroupRepository>();
+            services.AddScoped<ISubnetIpRepository, SubnetIpRepository>();
         }
     }
 }

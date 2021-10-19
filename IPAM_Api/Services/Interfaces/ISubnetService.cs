@@ -1,6 +1,8 @@
 ﻿using IPAM_Common.DTOs;
 using IPAM_Common.DTOs.Subnet;
+using IPAM_Repo.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace IPAM_Api.Services.Interfaces
@@ -10,7 +12,7 @@ namespace IPAM_Api.Services.Interfaces
         Task<Guid> AddSubnet(SubnetDto subnetDto);
         Task<TracertResponseDto> TraceRoute(string ipAddress);
         Task<PingReplyDto> Ping(string ipAddress);
-        //Task<IEnumerable<SubnetTreeDto>> GetSubnetTree();
-        //Task<IEnumerable<SubnetIpDetail>> GetSubnetIPs(string subnet);
+        Task<List<SubnetIP>> GetSubnetIPs(Guid subnetId);
+        Task<bool> UpdateSubnetIpDetail(Guid subnetIpId);
     }
 }

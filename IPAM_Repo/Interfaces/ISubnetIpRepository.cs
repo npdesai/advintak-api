@@ -10,5 +10,8 @@ namespace IPAM_Repo.Interfaces
     public interface ISubnetIpRepository
     {
         Task<Guid> Create(SubnetIP subnetIP);
+        Task<List<SubnetIP>> GetIpListBySubnetId(Guid subnetId);
+        Task<bool> UpdateSubnetIpDetail(SubnetIP subnetIP);
+        Task<SubnetIP> GetSubnetIpDetailById(Guid Id);
     }
 }

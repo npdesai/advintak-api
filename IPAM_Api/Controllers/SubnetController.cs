@@ -1,9 +1,11 @@
 ﻿using IPAM_Api.Services.Interfaces;
 using IPAM_Common.DTOs;
 using IPAM_Common.DTOs.Subnet;
+using IPAM_Repo.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace IPAM_Api.Controllers
@@ -31,6 +33,32 @@ namespace IPAM_Api.Controllers
         public async Task<ActionResult<Guid>> AddSubnet(SubnetDto subnetDto)
         {
             return await _subnetService.AddSubnet(subnetDto);
+        }
+
+        /// <summary>
+        /// SubnetIpList
+        /// </summary>
+        /// <param name="subnetId"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(SubnetIP), StatusCodes.Status200OK)]
+        [Route("api/Subnet/SubnetIpList", Name = "SubnetIpList")]
+        [HttpGet]
+        public async Task<List<SubnetIP>> SubnetIpList(Guid subnetId)
+        {
+            return await _subnetService.GetSubnetIPs(subnetId);
+        }
+
+        /// <summary>
+        /// Update subnet Ip detail
+        /// </summary>
+        /// <param name="subnetIpId"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [Route("api/Subnet/UpdateSubnetIpDetail", Name = "UpdateSubnetIpDetail")]
+        [HttpGet]
+        public async Task<bool> UpdateSubnetIpDetail(Guid subnetIpId)
+        {
+            return await _subnetService.UpdateSubnetIpDetail(subnetIpId);
         }
 
         /// <summary>

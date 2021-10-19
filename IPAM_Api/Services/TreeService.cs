@@ -67,7 +67,7 @@ namespace IPAM_Api.Services
                     {
                         Data = "Work Folder",
                         Label = subnets.SubnetAddress,
-                        Path = "/ipam/subnets/" + subnets.SubnetAddress.Split("/")[0],
+                        Path = "/ipam/subnets/" + subnets.SubnetId, //subnets.SubnetAddress.Split("/")[0],
                         ExpandedIcon = "pi pi-cloud",
                         CollapsedIcon = "pi pi-cloud"
                     };
