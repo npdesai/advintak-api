@@ -20,7 +20,7 @@ namespace IPAM_Api.Services
         private readonly IMasterDataRepository _masterDataRepository;
         private readonly ISubnetIpRepository _subnetIpRepository;
 
-        public SubnetService(            
+        public SubnetService(
           IMapper mapper,
           ISubnetRepository subnetRepository,
           IMasterDataRepository masterDataRepository,
@@ -57,15 +57,16 @@ namespace IPAM_Api.Services
                 subnetDto.SubnetAddress = string.Join(".", modifyIP, "0") + mask.CIDR;
                 var subnetId = await _subnetRepository.Create(_mapper.Map<Subnet>(subnetDto));
 
-                for (int i=0; i <= mask.Addresses; i++)
+                for (int i = 0; i <= mask.Addresses; i++)
                 {
                     SubnetIP subnetIP = new SubnetIP()
                     {
                         IPAddress = string.Join(".", modifyIP, i),
-                        SubnetId = subnetId
+                        SubnetId = subnetId,
+                        DnsStatus = "N/A"
                     };
 
-                   await _subnetIpRepository.Create(subnetIP);
+                    await _subnetIpRepository.Create(subnetIP);
                 }
 
                 return subnetId;
@@ -107,24 +108,27 @@ namespace IPAM_Api.Services
 
         public async Task<List<SubnetIP>> GetSubnetIPs(Guid subnetId)
         {
-            List<SubnetIP> SubnetIpList = await _subnetIpRepository.GetIpListBySubnetId(subnetId);                       
+            List<SubnetIP> SubnetIpList = await _subnetIpRepository.GetIpListBySubnetId(subnetId);
 
             return SubnetIpList;
         }
 
-        public async Task<bool> UpdateSubnetIpDetail(Guid subnetIpId)
+        public async Task<SubnetIPDetailDto> UpdateSubnetIpDetail(Guid subnetIpId)
         {
             SubnetIP subnetIP = await _subnetIpRepository.GetSubnetIpDetailById(subnetIpId);
-            if(subnetIP != null)
+            if (subnetIP != null)
             {
                 subnetIP.MacAddress = MacHelper.GetMACAddress(subnetIP.IPAddress);
-                subnetIP.Status = IPHelper.Ping(subnetIP.IPAddress).Result.Status == 0 ? "Used" : "Transient";
+                subnetIP.Status = IPHelper.Ping(subnetIP.IPAddress).Result.Status == 0 ? "Used" : "Not Reachable";
+                subnetIP.ConnectedSwitch = GatewayHelper.GetDefaultGatewayIP(subnetIP.IPAddress);
                 subnetIP.LastScan = DateTime.Now;
 
-               return await _subnetIpRepository.UpdateSubnetIpDetail(subnetIP);
+                await _subnetIpRepository.UpdateSubnetIpDetail(subnetIP);
             }
 
-            return false;
+            subnetIP = await _subnetIpRepository.GetSubnetIpDetailById(subnetIpId);
+
+            return _mapper.Map<SubnetIPDetailDto>(subnetIP);
         }
 
     }

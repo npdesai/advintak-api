@@ -15,7 +15,7 @@ namespace IPAM_Api
             CreateMap<SubnetGroup, SubnetGroupDto>().ReverseMap();
             CreateMap<SubnetMask, SubnetMaskDto>().ReverseMap();
             CreateMap<ServerType, ServerTypeDto>().ReverseMap();
-
+            CreateMap<SubnetIP, SubnetIPDetailDto>().ReverseMap();
             CreateMap<PingReply, PingReplyDto>().ReverseMap();
         }
     }

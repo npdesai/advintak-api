@@ -43,20 +43,21 @@ namespace IPAM_Api.Controllers
         [ProducesResponseType(typeof(SubnetIP), StatusCodes.Status200OK)]
         [Route("api/Subnet/SubnetIpList", Name = "SubnetIpList")]
         [HttpGet]
-        public async Task<List<SubnetIP>> SubnetIpList(Guid subnetId)
+        public async Task<List<SubnetIP>> GetSubnetIpList(Guid subnetId)
         {
             return await _subnetService.GetSubnetIPs(subnetId);
         }
 
         /// <summary>
-        /// Update subnet Ip detail
+        /// Scan Subnet IP By Id, 
+        /// And get IP details.
         /// </summary>
         /// <param name="subnetIpId"></param>
         /// <returns></returns>
-        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        [Route("api/Subnet/UpdateSubnetIpDetail", Name = "UpdateSubnetIpDetail")]
-        [HttpGet]
-        public async Task<bool> UpdateSubnetIpDetail(Guid subnetIpId)
+        [ProducesResponseType(typeof(SubnetIPDetailDto), StatusCodes.Status200OK)]
+        [Route("api/Subnet/ScanIP", Name = "Scan Subnet IP")]
+        [HttpPatch]
+        public async Task<SubnetIPDetailDto> ScanIPById(Guid subnetIpId)
         {
             return await _subnetService.UpdateSubnetIpDetail(subnetIpId);
         }

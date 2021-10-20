@@ -21,6 +21,10 @@ namespace IPAM_Repo.Models
         public string Status { get; set; }
         public string DeviceType { get; set; }
         public string ConnectedSwitch { get; set; }
+        public string ReservedStatus { get; set; }
+        public string AliasName { get; set; }
+        public string AssetTag { get; set; }
+        public string SystemLocation { get; set; }
         public DateTime LastScan { get; set; }
     }
 }
