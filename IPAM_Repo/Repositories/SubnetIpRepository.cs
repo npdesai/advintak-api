@@ -21,7 +21,7 @@ namespace IPAM_Repo.Repositories
 
         public async Task<List<SubnetIP>> GetIpListBySubnetId(Guid subnetId)
         {            
-            return await _dbContext.SubnetIP.Where(x => x.SubnetId == subnetId).ToListAsync();
+            return await _dbContext.SubnetIP.Where(x => x.SubnetId == subnetId).OrderBy(x=>x.IPAddress).ToListAsync();
         }
 
         public async Task<SubnetIP> GetSubnetIpDetailById(Guid Id)
