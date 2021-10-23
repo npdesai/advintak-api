@@ -134,11 +134,11 @@ namespace IPAM_Api.Services
 
         public async Task<SubnetIPDetailDto> UpdateSubnetIpDetail(SubnetIPDetailDto subnetIPDetail)
         {
-            SubnetIP subnetIP = await _subnetIpRepository.GetSubnetIpDetailById(subnetIPDetail.SubnetId);
+            SubnetIP subnetIP = await _subnetIpRepository.GetSubnetIpDetailById(subnetIPDetail.SubnetIPId);
             if (subnetIP != null)
             {
                 subnetIP.Status = subnetIPDetail.Status;
-                subnetIP.ReservedStatus = subnetIPDetail.Status;
+                subnetIP.ReservedStatus = subnetIPDetail.ReservedStatus;
                 subnetIP.AliasName = subnetIPDetail.AliasName;
                 subnetIP.AssetTag = subnetIPDetail.AssetTag;
                 subnetIP.SystemLocation = subnetIPDetail.SystemLocation;
