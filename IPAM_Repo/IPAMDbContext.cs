@@ -21,7 +21,7 @@ namespace IPAM_Repo
         {
             if (optionsBuilder.IsConfigured == false)
             {
-                optionsBuilder.UseNpgsql(@"Host=localhost;Database=IPAM;Username=postgres;Password=postgress;Port=5432");
+                optionsBuilder.UseNpgsql(@"Host=localhost;Database=IPAM;Username=postgres;Password=sa123;Port=5432");
             }
         }
     }

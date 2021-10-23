@@ -10,7 +10,7 @@ namespace IPAM_Api.Services.Interfaces
     public interface ISubnetService
     {
         Task<Guid> AddSubnet(SubnetDto subnetDto);
-        Task<TracertResponseDto> TraceRoute(string ipAddress);
+        Task<List<TracertResponseDto>> TraceRoute(string ipAddress);
         Task<PingReplyDto> Ping(string ipAddress);
         Task<List<SubnetIP>> GetSubnetIPs(Guid subnetId);
         Task<SubnetIPDetailDto> ScanAndUpdateSubnetIpDetail(Guid subnetIpId);

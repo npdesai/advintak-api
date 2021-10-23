@@ -80,10 +80,10 @@ namespace IPAM_Api.Controllers
         /// </summary>
         /// <param name="ipAddress"></param>
         /// <returns></returns>
-        [ProducesResponseType(typeof(TracertResponseDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<TracertResponseDto>), StatusCodes.Status200OK)]
         [Route("api/Subnet/TraceRoute", Name = "Trace Route")]
         [HttpGet]
-        public async Task<TracertResponseDto> TraceRoute(string ipAddress)
+        public async Task<List<TracertResponseDto>> TraceRoute(string ipAddress)
         {
             return await _subnetService.TraceRoute(ipAddress);
         }

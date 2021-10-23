@@ -76,25 +76,29 @@ namespace IPAM_Api.Services
         }
 
 
-        public async Task<TracertResponseDto> TraceRoute(string ipAddress)
+        public async Task<List<TracertResponseDto>> TraceRoute(string ipAddress)
         {
-            TracertResponseDto tracertResponse = new TracertResponseDto();
-            var traceRoute = IPHelper.TraceRoute(ipAddress, 3, 1000);
-            if (traceRoute.Any(t => t.Status == IPStatus.Success))
+            List<TracertResponseDto> tracertResponse = new List<TracertResponseDto>();
+            var traceRoute = IPHelper.TraceRoute(ipAddress, 1000);
+            if (traceRoute.ToList().Count > 2)
             {
-                tracertResponse = traceRoute
-                    .GroupBy(t => t.Address)
-                    .Select(c => new TracertResponseDto()
-                    {
-                        DNSName = c.FirstOrDefault().Hostname,
-                        Hop = c.FirstOrDefault().Hop,
-                        IPAddress = c.LastOrDefault().Address,
-                        ResponseTime1 = c.FirstOrDefault(x => x.Hop == 1).ResponseTime,
-                        ResponseTime2 = c.FirstOrDefault(x => x.Hop == 2).ResponseTime,
-                        ResponseTime3 = c.FirstOrDefault(x => x.Hop == 2).ResponseTime,
-                        Status = true
-                    }).FirstOrDefault();
+                tracertResponse = _mapper.Map<List<TracertResponseDto>>(traceRoute);
             }
+            //if (traceRoute.Any(t => t.Status == IPStatus.Success))
+            //{
+            //    tracertResponse = traceRoute
+            //        .GroupBy(t => t.Address)
+            //        .Select(c => new TracertResponseDto()
+            //        {
+            //            DNSName = c.FirstOrDefault().Hostname,
+            //            Hop = c.FirstOrDefault().Hop,
+            //            IPAddress = c.LastOrDefault().Address,
+            //            ResponseTime1 = c.FirstOrDefault(x => x.Hop == 1).ResponseTime,
+            //            ResponseTime2 = c.FirstOrDefault(x => x.Hop == 2).ResponseTime,
+            //            ResponseTime3 = c.FirstOrDefault(x => x.Hop == 2).ResponseTime,
+            //            Status = true
+            //        }).FirstOrDefault();
+            //}
 
             return tracertResponse;
         }
@@ -142,6 +146,7 @@ namespace IPAM_Api.Services
                 subnetIP.AliasName = subnetIPDetail.AliasName;
                 subnetIP.AssetTag = subnetIPDetail.AssetTag;
                 subnetIP.SystemLocation = subnetIPDetail.SystemLocation;
+                subnetIP.DeviceType = subnetIPDetail.DeviceType;
 
                 await _subnetIpRepository.UpdateSubnetIpDetail(subnetIP);
             }

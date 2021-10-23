@@ -19,15 +19,11 @@ namespace IPAM_Common
             return res;                        
         }
 
-        public static IEnumerable<TracertEntryDto> TraceRoute(string ipAddress, int maxHops, int timeout)
+        public static IEnumerable<TracertEntryDto> TraceRoute(string ipAddress, int timeout)
         {
             // Ensure that the argument address is valid.
             if (!IPAddress.TryParse(ipAddress, out IPAddress address))
-                throw new ArgumentException(string.Format("{0} is not a valid IP address.", ipAddress));
-
-            // Max hops should be at least one or else there won't be any data to return.
-            if (maxHops < 1)
-                throw new ArgumentException("Max hops can't be lower than 1.");
+                throw new ArgumentException(string.Format("{0} is not a valid IP address.", ipAddress));            
 
             // Ensure that the timeout is not set to 0 or a negative number.
             if (timeout < 1) throw new ArgumentException("Timeout value must be higher than 0."); 
@@ -64,7 +60,7 @@ namespace IPAM_Common
                 pingOptions.Ttl++;
                 pingReplyTime.Reset();
             }
-            while (pingOptions.Ttl <= maxHops);
+            while (reply.Status != IPStatus.Success);
         }
     }
 }
