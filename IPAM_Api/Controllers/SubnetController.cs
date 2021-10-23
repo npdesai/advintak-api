@@ -59,7 +59,20 @@ namespace IPAM_Api.Controllers
         [HttpPatch]
         public async Task<SubnetIPDetailDto> ScanIPById(Guid subnetIpId)
         {
-            return await _subnetService.UpdateSubnetIpDetail(subnetIpId);
+            return await _subnetService.ScanAndUpdateSubnetIpDetail(subnetIpId);
+        }
+
+        /// <summary>
+        /// Update Subnet IP,         
+        /// </summary>
+        /// <param name="subnetIPDetail"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(SubnetIPDetailDto), StatusCodes.Status200OK)]
+        [Route("api/Subnet/UpdateIPById", Name = "Update Subnet IP")]
+        [HttpPatch]
+        public async Task<SubnetIPDetailDto> UpdateIPById(SubnetIPDetailDto subnetIPDetail)
+        {
+            return await _subnetService.UpdateSubnetIpDetail(subnetIPDetail);
         }
 
         /// <summary>

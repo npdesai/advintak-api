@@ -13,6 +13,7 @@ namespace IPAM_Api.Services.Interfaces
         Task<TracertResponseDto> TraceRoute(string ipAddress);
         Task<PingReplyDto> Ping(string ipAddress);
         Task<List<SubnetIP>> GetSubnetIPs(Guid subnetId);
-        Task<SubnetIPDetailDto> UpdateSubnetIpDetail(Guid subnetIpId);
+        Task<SubnetIPDetailDto> ScanAndUpdateSubnetIpDetail(Guid subnetIpId);
+        Task<SubnetIPDetailDto> UpdateSubnetIpDetail(SubnetIPDetailDto subnetIPDetail);
     }
 }

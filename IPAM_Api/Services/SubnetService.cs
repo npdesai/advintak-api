@@ -57,7 +57,7 @@ namespace IPAM_Api.Services
                 subnetDto.SubnetAddress = string.Join(".", modifyIP, "0") + mask.CIDR;
                 var subnetId = await _subnetRepository.Create(_mapper.Map<Subnet>(subnetDto));
 
-                for (int i = 0; i <= mask.Addresses; i++)
+                for (int i = 1; i <= mask.Addresses; i++)
                 {
                     SubnetIP subnetIP = new SubnetIP()
                     {
@@ -113,7 +113,7 @@ namespace IPAM_Api.Services
             return SubnetIpList;
         }
 
-        public async Task<SubnetIPDetailDto> UpdateSubnetIpDetail(Guid subnetIpId)
+        public async Task<SubnetIPDetailDto> ScanAndUpdateSubnetIpDetail(Guid subnetIpId)
         {
             SubnetIP subnetIP = await _subnetIpRepository.GetSubnetIpDetailById(subnetIpId);
             if (subnetIP != null)
@@ -131,5 +131,24 @@ namespace IPAM_Api.Services
             return _mapper.Map<SubnetIPDetailDto>(subnetIP);
         }
 
+
+        public async Task<SubnetIPDetailDto> UpdateSubnetIpDetail(SubnetIPDetailDto subnetIPDetail)
+        {
+            SubnetIP subnetIP = await _subnetIpRepository.GetSubnetIpDetailById(subnetIPDetail.SubnetId);
+            if (subnetIP != null)
+            {
+                subnetIP.Status = subnetIPDetail.Status;
+                subnetIP.ReservedStatus = subnetIPDetail.Status;
+                subnetIP.AliasName = subnetIPDetail.AliasName;
+                subnetIP.AssetTag = subnetIPDetail.AssetTag;
+                subnetIP.SystemLocation = subnetIPDetail.SystemLocation;
+
+                await _subnetIpRepository.UpdateSubnetIpDetail(subnetIP);
+            }
+
+            subnetIP = await _subnetIpRepository.GetSubnetIpDetailById(subnetIPDetail.SubnetId);
+
+            return _mapper.Map<SubnetIPDetailDto>(subnetIP);
+        }
     }
 }
