@@ -57,7 +57,7 @@ namespace IPAM_Api.Services
                 subnetDto.SubnetAddress = string.Join(".", modifyIP, "0") + mask.CIDR;
                 var subnetId = await _subnetRepository.Create(_mapper.Map<Subnet>(subnetDto));
 
-                for (int i = 1; i <= mask.Addresses; i++)
+                for (int i = 1; i <= mask.Hosts; i++)
                 {
                     SubnetIP subnetIP = new SubnetIP()
                     {

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,7 +22,9 @@ namespace IPAM_Repo.Repositories
 
         public async Task<List<SubnetIP>> GetIpListBySubnetId(Guid subnetId)
         {            
-            return await _dbContext.SubnetIP.Where(x => x.SubnetId == subnetId).OrderBy(x=>x.IPAddress).ToListAsync();
+            return await _dbContext.SubnetIP
+                                    .Where(x => x.SubnetId == subnetId)
+                                    .OrderBy(x => IPAddress.Parse(x.IPAddress)).ToListAsync();
         }
 
         public async Task<SubnetIP> GetSubnetIpDetailById(Guid Id)
