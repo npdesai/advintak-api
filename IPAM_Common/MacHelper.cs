@@ -52,7 +52,7 @@ namespace IPAM_Common
                 throw new Exception(err.Message);
             }
 
-            return mac_dest;
+            return mac_dest.Replace("00-00-00-00-00-00", "");
         }
     }
 }
