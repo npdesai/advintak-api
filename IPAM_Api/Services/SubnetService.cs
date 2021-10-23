@@ -62,8 +62,7 @@ namespace IPAM_Api.Services
                     SubnetIP subnetIP = new SubnetIP()
                     {
                         IPAddress = string.Join(".", modifyIP, i),
-                        SubnetId = subnetId,
-                        DnsStatus = "N/A"
+                        SubnetId = subnetId
                     };
 
                     await _subnetIpRepository.Create(subnetIP);
