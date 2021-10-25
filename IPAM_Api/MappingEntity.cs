@@ -18,6 +18,7 @@ namespace IPAM_Api
             CreateMap<SubnetIP, SubnetIPDetailDto>().ReverseMap();
             CreateMap<PingReply, PingReplyDto>().ReverseMap();
             CreateMap<TracertEntryDto, TracertResponseDto>().ReverseMap();
+            CreateMap<IPV6SubnetDto, IPV6Subnet>().ReverseMap();
         }
     }
 }

@@ -16,10 +16,12 @@ namespace IPAM_Api.Controllers
     public class SubnetController : ControllerBase
     {
         private readonly ISubnetService _subnetService;
+        private readonly IIPV6SubnetService _iPV6SubnetService;
 
-        public SubnetController(ISubnetService subnetService)
+        public SubnetController(ISubnetService subnetService, IIPV6SubnetService iPV6SubnetService)
         {
             _subnetService = subnetService;
+            _iPV6SubnetService = iPV6SubnetService;
         }
 
         /// <summary>
@@ -99,6 +101,19 @@ namespace IPAM_Api.Controllers
         public async Task<PingReplyDto> Ping(string ipAddress)
         {
             return await _subnetService.Ping(ipAddress);
+        }
+
+        /// <summary>
+        /// Add IPV6 Subnet
+        /// </summary>
+        /// <param name="iPV6SubnetDto"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
+        [Route("api/Subnet/AddIPV6", Name = "Add IPV6 Subnet")]
+        [HttpPost]
+        public async Task<ActionResult<Guid>> AddIPV6Subnet(IPV6SubnetDto iPV6SubnetDto)
+        {
+            return await _iPV6SubnetService.AddIPV6Subnet(iPV6SubnetDto);
         }
     }
 }
