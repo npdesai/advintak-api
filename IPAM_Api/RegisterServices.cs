@@ -12,6 +12,7 @@ namespace IPAM_Api
             services.AddScoped<ISubnetService, SubnetService>();
             services.AddScoped<ITreeService, TreeService>();
             services.AddScoped<IIPV6SubnetService, IPV6SubnetService>();
+            services.AddScoped<ICompanyService, CompanyService>();
         }
     }
 }

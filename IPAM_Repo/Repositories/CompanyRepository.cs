@@ -1,6 +1,9 @@
 ﻿using IPAM_Repo.Interfaces;
 using IPAM_Repo.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace IPAM_Repo.Repositories
@@ -20,6 +23,11 @@ namespace IPAM_Repo.Repositories
             await _dbContext.SaveChangesAsync();
 
             return company.CompanyId;
+        }
+
+        public async Task<List<Company>> GetCompanies()
+        {
+            return await _dbContext.Company.Where(c => !string.IsNullOrEmpty(c.Name)).ToListAsync();
         }
     }
 }
