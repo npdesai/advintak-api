@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace IPAM_Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("")]
     [ApiController]
     public class SettingController : ControllerBase
     {
@@ -21,10 +21,11 @@ namespace IPAM_Api.Controllers
         }
 
         /// <summary>
-        /// Get Device List
+        /// Get Routers List
         /// </summary>
         /// <returns></returns>
         [ProducesResponseType(typeof(List<DeviceDto>), StatusCodes.Status200OK)]
+        [Route("api/Setting/Routers", Name = "Get Routers")]
         [HttpGet]
         public async Task<List<DeviceDto>> GetDeviceList()
         {
@@ -32,12 +33,12 @@ namespace IPAM_Api.Controllers
         }
 
         /// <summary>
-        /// Add Device
+        /// Add Router
         /// </summary>
         /// <param name="deviceDto"></param>
         /// <returns></returns>
         [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
-        [Route("api/Setting/AddDevice", Name = "Add Device")]
+        [Route("api/Setting/AddRouter", Name = "Add Router")]
         [HttpPost]
         public async Task<ActionResult<Guid>> AddDevice(DeviceDto deviceDto)
         {
