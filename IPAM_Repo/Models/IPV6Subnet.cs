@@ -13,7 +13,7 @@ namespace IPAM_Repo.Models
         public string PrefixAddress { get; set; }
         public int PrefixLength { get; set; }
         public string PrefixDescription { get; set; }
-        public Guid CompanyId { get; set; }
+        public Guid? CompanyId { get; set; }
         public virtual Company Company { get; set; }
     }
 }

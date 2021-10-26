@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using IPAM_Common.DTOs;
 using IPAM_Common.DTOs.Master;
+using IPAM_Common.DTOs.Setting;
 using IPAM_Common.DTOs.Subnet;
 using IPAM_Repo.Models;
 using System.Net.NetworkInformation;
@@ -20,6 +21,7 @@ namespace IPAM_Api
             CreateMap<TracertEntryDto, TracertResponseDto>().ReverseMap();
             CreateMap<IPV6SubnetDto, IPV6Subnet>().ReverseMap();
             CreateMap<Company, CompanyDto>().ReverseMap();
+            CreateMap<Device, DeviceDto>().ReverseMap();
         }
     }
 }

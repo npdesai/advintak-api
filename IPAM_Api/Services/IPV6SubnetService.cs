@@ -4,6 +4,7 @@ using IPAM_Common.DTOs.Subnet;
 using IPAM_Repo.Interfaces;
 using IPAM_Repo.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace IPAM_Api.Services
@@ -19,6 +20,11 @@ namespace IPAM_Api.Services
             _iPV6SubnetRepository = iPV6SubnetRepository;
             _companyRepository = companyRepository;
             _mapper = mapper;
+        }
+
+        public async Task<List<IPV6SubnetDto>> GetIPV6SubnetList()
+        {            
+            return _mapper.Map<List<IPV6SubnetDto>>(await _iPV6SubnetRepository.GetList());
         }
 
         public async Task<Guid> AddIPV6Subnet(IPV6SubnetDto iPV6Subnet)

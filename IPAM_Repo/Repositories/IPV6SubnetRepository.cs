@@ -2,6 +2,7 @@
 using IPAM_Repo.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace IPAM_Repo.Repositories
@@ -13,6 +14,11 @@ namespace IPAM_Repo.Repositories
         public IPV6SubnetRepository(IPAMDbContext dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        public async Task<List<IPV6Subnet>> GetList()
+        {            
+            return await _dbContext.IPV6Subnet.ToListAsync();
         }
 
         public async Task<Guid> Create(IPV6Subnet iPV6Subnet)
