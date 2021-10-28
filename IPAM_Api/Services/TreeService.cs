@@ -64,8 +64,8 @@ namespace IPAM_Api.Services
                         Data = "Documents Folder",
                         Label = string.Join("/",iPV6Subnet.PrefixName,iPV6Subnet.PrefixLength),
                         Path = "/ipam/ipv6/" + iPV6Subnet.IPV6SubnetId,
-                        ExpandedIcon = "pi pi-folder-open",
-                        CollapsedIcon = "pi pi-folder",
+                        ExpandedIcon = "pi pi-cloud",
+                        CollapsedIcon = "pi pi-cloud",
                         Expanded = true                        
                     };
 
