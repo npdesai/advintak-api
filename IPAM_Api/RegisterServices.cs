@@ -14,6 +14,7 @@ namespace IPAM_Api
             services.AddScoped<IIPV6SubnetService, IPV6SubnetService>();
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IDeviceService, DeviceService>();
+            services.AddScoped<IDomainService, DomainService>();
         }
     }
 }

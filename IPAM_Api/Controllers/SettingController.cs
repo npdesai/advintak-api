@@ -44,5 +44,18 @@ namespace IPAM_Api.Controllers
         {
             return await _deviceService.AddDevice(deviceDto);
         }
+
+        /// <summary>
+        /// Delete Routers
+        /// </summary>
+        /// <param name="deviceList"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [Route("api/Setting/DeleteRouters", Name = "Delete Routers")]
+        [HttpDelete]
+        public async Task<ActionResult<bool>> DeleteRouters(List<DeviceDto> deviceList)
+        {
+            return await _deviceService.DeleteDeviceList(deviceList);
+        }
     }
 }

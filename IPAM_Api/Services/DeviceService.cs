@@ -30,5 +30,18 @@ namespace IPAM_Api.Services
         {           
             return await _deviceRepository.Create(_mapper.Map<Device>(deviceDto));
         }
+
+        public async Task<bool> DeleteDeviceList(List<DeviceDto> deviceList)
+        {
+            foreach(DeviceDto deviceDto in deviceList)
+            {
+                Device device = await _deviceRepository.GetDeviceById(deviceDto.DeviceId);
+                if(device != null)
+                {
+                    await _deviceRepository.Delete(device);
+                }
+            }
+            return true;
+        }
     }
 }

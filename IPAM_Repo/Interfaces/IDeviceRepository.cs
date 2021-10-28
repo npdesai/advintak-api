@@ -11,5 +11,7 @@ namespace IPAM_Repo.Interfaces
     {
         Task<List<Device>> GetDeviceList();
         Task<Guid> Create(Device device);
+        Task<bool> Delete(Device device);
+        Task<Device> GetDeviceById(Guid deviceId);
     }
 }

@@ -9,7 +9,7 @@ namespace IPAM_Common.DTOs.Setting
     public class DeviceDto
     {
         public Guid DeviceId { get; set; }
-        public string DeviceType { get; set; }
+        public string DeviceName { get; set; }
         public string DeviceIPAddress { get; set; }
         public DateTime? LastScanTime { get; set; }
         public string? Status { get; set; }

@@ -23,12 +23,25 @@ namespace IPAM_Repo.Repositories
             return await _dbContext.Device.ToListAsync();
         }
 
+        public async Task<Device> GetDeviceById(Guid deviceId)
+        {
+            return await _dbContext.Device.FirstOrDefaultAsync(x=>x.DeviceId == deviceId);
+        }
+
         public async Task<Guid> Create(Device device)
         {
             await _dbContext.Device.AddAsync(device);
             await _dbContext.SaveChangesAsync();
 
             return device.DeviceId;
+        }
+
+        public async Task<bool> Delete(Device device)
+        {            
+            _dbContext.Device.Remove(device);                 
+            await _dbContext.SaveChangesAsync();
+
+            return true;
         }
     }
 }

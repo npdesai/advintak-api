@@ -19,6 +19,7 @@ namespace IPAM_Repo
         public DbSet<IPV6Subnet> IPV6Subnet { get; set; }
         public DbSet<Company> Company { get; set; }
         public DbSet<Device> Device { get; set; }
+        public DbSet<Domain> Domains { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

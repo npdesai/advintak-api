@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace IPAM_Repo.Models
 {
-    public class Device
+    public class Domain
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public Guid DeviceId { get; set; }
-        public string DeviceName { get; set; }
-        public string DeviceIPAddress { get; set; }
-        public DateTime? LastScanTime { get; set; }
-        public string? Status { get; set; }
+        public Guid DomainId { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public string DomainName { get; set; }
+        public string DomainControllerName { get; set; }
     }
 }
