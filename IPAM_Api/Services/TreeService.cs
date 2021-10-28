@@ -62,8 +62,8 @@ namespace IPAM_Api.Services
                     SubnetTreeDto subnetTree = new SubnetTreeDto()
                     {
                         Data = "Documents Folder",
-                        Label = iPV6Subnet.PrefixName,
-                        Path = "/ipam/groups/",
+                        Label = string.Join("/",iPV6Subnet.PrefixName,iPV6Subnet.PrefixLength),
+                        Path = "/ipam/ipv6/" + iPV6Subnet.IPV6SubnetId,
                         ExpandedIcon = "pi pi-folder-open",
                         CollapsedIcon = "pi pi-folder",
                         Expanded = true                        
