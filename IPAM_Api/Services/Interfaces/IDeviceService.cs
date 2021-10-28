@@ -10,6 +10,6 @@ namespace IPAM_Api.Services.Interfaces
     {
         Task<List<DeviceDto>> GetDeviceList();
         Task<Guid> AddDevice(DeviceDto deviceDto);
-        Task<bool> DeleteDeviceList(List<DeviceDto> deviceList);
+        Task<bool> DeleteDeviceList(List<Guid> devices);
     }
 }

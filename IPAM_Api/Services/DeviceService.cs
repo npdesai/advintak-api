@@ -31,11 +31,11 @@ namespace IPAM_Api.Services
             return await _deviceRepository.Create(_mapper.Map<Device>(deviceDto));
         }
 
-        public async Task<bool> DeleteDeviceList(List<DeviceDto> deviceList)
+        public async Task<bool> DeleteDeviceList(List<Guid> devices)
         {
-            foreach(DeviceDto deviceDto in deviceList)
+            foreach(Guid deviceId in devices)
             {
-                Device device = await _deviceRepository.GetDeviceById(deviceDto.DeviceId);
+                Device device = await _deviceRepository.GetDeviceById(deviceId);
                 if(device != null)
                 {
                     await _deviceRepository.Delete(device);
