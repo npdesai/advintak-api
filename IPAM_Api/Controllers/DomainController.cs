@@ -65,7 +65,7 @@ namespace IPAM_Api.Controllers
         /// <returns></returns>
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [Route("api/Domain/DeleteDomain", Name = "Delete Domain")]
-        [HttpPatch]
+        [HttpDelete]
         public async Task<ActionResult<bool>> DeleteDomain(Guid domainId)
         {
             return await _domainService.DeleteDomain(domainId);
