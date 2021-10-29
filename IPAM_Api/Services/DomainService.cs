@@ -31,7 +31,7 @@ namespace IPAM_Api.Services
             return await _domainRepository.Create(_mapper.Map<Domain>(domainDto));
         }
 
-        public async Task<bool> UpdateDomain(DomainDto domainDto)
+        public async Task<DomainDto> UpdateDomain(DomainDto domainDto)
         {
             Domain domain = await _domainRepository.GetDomainById(domainDto.DomainId);
             if (domain != null)
@@ -41,10 +41,10 @@ namespace IPAM_Api.Services
                 domain.Password = domainDto.Password;
                 domain.UserName = domainDto.UserName;
                 await _domainRepository.Update(domain);
-                return true;
+                return domainDto;
             }
 
-            return false;
+            return domainDto;
         }
 
 

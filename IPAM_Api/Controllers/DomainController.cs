@@ -50,10 +50,10 @@ namespace IPAM_Api.Controllers
         /// </summary>
         /// <param name="domainDto"></param>
         /// <returns></returns>
-        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(DomainDto), StatusCodes.Status200OK)]
         [Route("api/Domain/UpdateDomain", Name = "Update Domain")]
         [HttpPatch]
-        public async Task<ActionResult<bool>> UpdateDomain(DomainDto domainDto)
+        public async Task<ActionResult<DomainDto>> UpdateDomain(DomainDto domainDto)
         {
             return await _domainService.UpdateDomain(domainDto);
         }
