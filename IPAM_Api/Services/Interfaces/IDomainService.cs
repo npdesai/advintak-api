@@ -10,5 +10,7 @@ namespace IPAM_Api.Services.Interfaces
     {
         Task<List<DomainDto>> GetDomainList();
         Task<Guid> AddDomain(DomainDto domainDto);
+        Task<bool> UpdateDomain(DomainDto domainDto);
+        Task<bool> DeleteDomain(Guid DomainId);
     }
 }

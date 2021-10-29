@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace IPAM_Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("")]
     [ApiController]
     public class DomainController : ControllerBase
     {
@@ -43,6 +43,32 @@ namespace IPAM_Api.Controllers
         public async Task<ActionResult<Guid>> AddDomain(DomainDto domainDto)
         {
             return await _domainService.AddDomain(domainDto);
+        }
+
+        /// <summary>
+        /// Update Domain
+        /// </summary>
+        /// <param name="domainDto"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [Route("api/Domain/UpdateDomain", Name = "Update Domain")]
+        [HttpPatch]
+        public async Task<ActionResult<bool>> UpdateDomain(DomainDto domainDto)
+        {
+            return await _domainService.UpdateDomain(domainDto);
+        }
+
+        /// <summary>
+        /// Delete Domain
+        /// </summary>
+        /// <param name="domainId"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [Route("api/Domain/DeleteDomain", Name = "Delete Domain")]
+        [HttpPatch]
+        public async Task<ActionResult<bool>> DeleteDomain(Guid domainId)
+        {
+            return await _domainService.DeleteDomain(domainId);
         }
     }
 }

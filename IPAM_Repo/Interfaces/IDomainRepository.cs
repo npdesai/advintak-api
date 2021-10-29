@@ -11,5 +11,8 @@ namespace IPAM_Repo.Interfaces
     {
         Task<List<Domain>> GetDomainList();
         Task<Guid> Create(Domain domain);
+        Task<Domain> GetDomainById(Guid domainId);
+        Task<bool> Update(Domain domain);
+        Task<bool> Delete(Domain domain);
     }
 }

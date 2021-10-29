@@ -23,12 +23,33 @@ namespace IPAM_Repo.Repositories
             return await _dbContext.Domains.ToListAsync();
         }
 
+        public async Task<Domain> GetDomainById(Guid domainId)
+        {
+            return await _dbContext.Domains.FirstOrDefaultAsync(d=>d.DomainId == domainId);
+        }
+
         public async Task<Guid> Create(Domain domain)
         {
             await _dbContext.Domains.AddAsync(domain);
             await _dbContext.SaveChangesAsync();
 
             return domain.DomainId;
+        }
+
+        public async Task<bool> Update(Domain domain)
+        {
+            _dbContext.Entry(domain).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> Delete(Domain domain)
+        {
+            _dbContext.Domains.Remove(domain);
+            await _dbContext.SaveChangesAsync();
+
+            return true;
         }
     }
 }

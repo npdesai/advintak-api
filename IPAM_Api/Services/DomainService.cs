@@ -31,5 +31,32 @@ namespace IPAM_Api.Services
             return await _domainRepository.Create(_mapper.Map<Domain>(domainDto));
         }
 
+        public async Task<bool> UpdateDomain(DomainDto domainDto)
+        {
+            Domain domain = await _domainRepository.GetDomainById(domainDto.DomainId);
+            if (domain != null)
+            {
+                domain.DomainName = domainDto.DomainName;
+                domain.DomainControllerName = domainDto.DomainControllerName;
+                domain.Password = domainDto.Password;
+                domain.UserName = domainDto.UserName;
+                await _domainRepository.Update(domain);
+                return true;
+            }
+
+            return false;
+        }
+
+
+        public async Task<bool> DeleteDomain(Guid DomainId)
+        {
+            Domain domain = await _domainRepository.GetDomainById(DomainId);
+            if (domain != null)
+            {
+                await _domainRepository.Delete(domain);
+                return true;
+            }
+            return false;
+        }
     }
 }
