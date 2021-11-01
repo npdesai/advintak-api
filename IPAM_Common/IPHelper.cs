@@ -21,6 +21,7 @@ namespace IPAM_Common
 
         public static IEnumerable<TracertEntryDto> TraceRoute(string ipAddress, int timeout)
         {
+            int maxHops = 20;
             // Ensure that the argument address is valid.
             if (!IPAddress.TryParse(ipAddress, out IPAddress address))
                 throw new ArgumentException(string.Format("{0} is not a valid IP address.", ipAddress));            
@@ -59,6 +60,11 @@ namespace IPAM_Common
 
                 pingOptions.Ttl++;
                 pingReplyTime.Reset();
+
+                if(pingOptions.Ttl > maxHops)
+                {
+                    break;
+                }
             }
             while (reply.Status != IPStatus.Success);
         }
