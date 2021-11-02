@@ -79,7 +79,7 @@ namespace IPAM_Api.Services
         {
             List<TracertResponseDto> tracertResponse = new List<TracertResponseDto>();
             var traceRoute = IPHelper.TraceRoute(ipAddress, 1000);
-            if (traceRoute.ToList().Count > 2)
+            if (traceRoute.ToList().Count > 0)
             {
                 tracertResponse = _mapper.Map<List<TracertResponseDto>>(traceRoute);
             }

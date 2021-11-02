@@ -9,5 +9,7 @@ namespace IPAM_Api.Services.Interfaces
     {
         Task<Guid> AddIPV6Subnet(IPV6SubnetDto iPV6Subnet);
         Task<List<IPV6SubnetDto>> GetIPV6SubnetList();
+        Task<List<IPV6SubnetDetailDto>> GetIPV6SubnetDetailList(Guid iPV6SubnetId);
+        Task<IPV6SubnetDetailDto> UpdateIPV6SubnetDetail(IPV6SubnetDetailDto iPV6SubnetDetail);
     }
 }

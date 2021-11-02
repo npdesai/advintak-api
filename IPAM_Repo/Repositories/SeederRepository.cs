@@ -22,6 +22,7 @@ namespace IPAM_Repo.Repositories
         {
             SubnetMaskData();
             ServerTypeData();
+            DefaultGroupsData();
         }
 
         /// <summary>
@@ -67,6 +68,28 @@ namespace IPAM_Repo.Repositories
                 if (!_dbContext.ServerType.Any(b => b.Name == serverType.Name))
                 {
                     _dbContext.ServerType.Add(serverType);
+                }
+            });
+
+            _dbContext.SaveChanges();
+        }
+
+        /// <summary>
+        /// Save Default groups
+        /// </summary>
+        private void DefaultGroupsData()
+        {
+            var lines = File.ReadAllLines(MemCache.AppSettings.DefaultGroupMasterDataFilePath).Skip(1).Select(l => l.Split(","));
+            var subnetGroupData = lines.Select(line => new SubnetGroup
+            {
+                GroupName = line[0].Trim()
+            }).Cast<SubnetGroup>().ToList();
+
+            subnetGroupData.ForEach(subnetGroup =>
+            {
+                if (!_dbContext.SubnetGroup.Any(b => b.GroupName == subnetGroup.GroupName))
+                {
+                    _dbContext.SubnetGroup.Add(subnetGroup);
                 }
             });
 

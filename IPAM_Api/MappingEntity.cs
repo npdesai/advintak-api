@@ -23,6 +23,7 @@ namespace IPAM_Api
             CreateMap<Company, CompanyDto>().ReverseMap();
             CreateMap<Device, DeviceDto>().ReverseMap();
             CreateMap<Domain, DomainDto>().ReverseMap();
+            CreateMap<IPV6SubnetDetail, IPV6SubnetDetailDto>().ReverseMap();
         }
     }
 }

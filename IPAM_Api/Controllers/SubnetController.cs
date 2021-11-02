@@ -115,5 +115,31 @@ namespace IPAM_Api.Controllers
         {
             return await _iPV6SubnetService.AddIPV6Subnet(iPV6SubnetDto);
         }
+
+        /// <summary>
+        /// Add IPV6 Subnet Detail
+        /// </summary>
+        /// <param name="iPV6SubnetId"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(List<IPV6SubnetDetailDto>), StatusCodes.Status200OK)]
+        [Route("api/Subnet/GetIPV6SubnetDetailList", Name = "Get IPV6 Subnet Detail List")]
+        [HttpGet]
+        public async Task<List<IPV6SubnetDetailDto>> GetIPV6SubnetDetailList(Guid iPV6SubnetId)
+        {
+            return await _iPV6SubnetService.GetIPV6SubnetDetailList(iPV6SubnetId);
+        }
+
+        /// <summary>
+        /// Update IPV6 Detail,         
+        /// </summary>
+        /// <param name="iPV6SubnetDetail"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(IPV6SubnetDetailDto), StatusCodes.Status200OK)]
+        [Route("api/Subnet/UpdateIPV6DetailById", Name = "Update IPV6 Detail")]
+        [HttpPatch]
+        public async Task<IPV6SubnetDetailDto> UpdateIPV6DetailById(IPV6SubnetDetailDto iPV6SubnetDetail)
+        {
+            return await _iPV6SubnetService.UpdateIPV6SubnetDetail(iPV6SubnetDetail);
+        }
     }
 }
