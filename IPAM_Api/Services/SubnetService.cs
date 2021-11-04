@@ -150,7 +150,7 @@ namespace IPAM_Api.Services
                 await _subnetIpRepository.UpdateSubnetIpDetail(subnetIP);
             }
 
-            subnetIP = await _subnetIpRepository.GetSubnetIpDetailById(subnetIPDetail.SubnetId);
+            subnetIP = await _subnetIpRepository.GetSubnetIpDetailById(subnetIPDetail.SubnetIPId);
 
             return _mapper.Map<SubnetIPDetailDto>(subnetIP);
         }
