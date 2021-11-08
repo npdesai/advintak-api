@@ -3,15 +3,17 @@ using System;
 using IPAM_Repo;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IPAM_Repo.Migrations
 {
     [DbContext(typeof(IPAMDbContext))]
-    partial class IPAMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211108053055_updatesubnet")]
+    partial class updatesubnet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -268,41 +270,6 @@ namespace IPAM_Repo.Migrations
                     b.HasIndex("SubnetId");
 
                     b.ToTable("SubnetIP");
-                });
-
-            modelBuilder.Entity("IPAM_Repo.Models.SubnetIPHistory", b =>
-                {
-                    b.Property<Guid>("SubnetIPHistoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("DNSName")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("DetectedTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("DeviceType")
-                        .HasColumnType("text");
-
-                    b.Property<string>("IPAddress")
-                        .HasColumnType("text");
-
-                    b.Property<string>("MacAddress")
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("SubnetIPId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("SubnetId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("SysDescription")
-                        .HasColumnType("text");
-
-                    b.HasKey("SubnetIPHistoryId");
-
-                    b.ToTable("SubnetIPHistory");
                 });
 
             modelBuilder.Entity("IPAM_Repo.Models.SubnetMask", b =>

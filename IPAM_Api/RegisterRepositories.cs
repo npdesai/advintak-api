@@ -20,6 +20,7 @@ namespace IPAM_Api
             services.AddScoped<IDeviceRepository, DeviceRepository>();
             services.AddScoped<IDomainRepository, DomainRepository>();
             services.AddScoped<IIPV6SubnetDetailRepository, IPV6SubnetDetailRepository>();
+            services.AddScoped<ISubnetIPHistoryRepository, SubnetIPHistoryRepository>();
         }
     }
 }

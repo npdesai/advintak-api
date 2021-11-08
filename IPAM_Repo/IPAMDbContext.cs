@@ -21,7 +21,8 @@ namespace IPAM_Repo
         public DbSet<Device> Device { get; set; }
         public DbSet<Domain> Domains { get; set; }
         public DbSet<IPV6SubnetDetail> IPV6SubnetDetail { get; set; }
-
+        public DbSet<SubnetIPHistory> SubnetIPHistory { get; set; }
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (optionsBuilder.IsConfigured == false)

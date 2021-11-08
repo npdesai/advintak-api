@@ -17,6 +17,10 @@ namespace IPAM_Repo.Models
         public string SubnetName { get; set; }
         public string SubnetDescription { get; set; }
         public string VlanName { get; set; }
-        public string Location { get; set; }           
+        public string Location { get; set; }
+        public int Alert { get; set; }
+        public int Warning { get; set; }
+        public int Critical { get; set; }
+        public string Email { get; set; }
     }
 }

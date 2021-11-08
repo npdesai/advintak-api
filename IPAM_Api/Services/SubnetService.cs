@@ -7,6 +7,7 @@ using IPAM_Repo.Interfaces;
 using IPAM_Repo.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
@@ -19,18 +20,21 @@ namespace IPAM_Api.Services
         private readonly ISubnetRepository _subnetRepository;
         private readonly IMasterDataRepository _masterDataRepository;
         private readonly ISubnetIpRepository _subnetIpRepository;
+        private readonly ISubnetIPHistoryRepository _subnetIPHistoryRepository;
 
         public SubnetService(
           IMapper mapper,
           ISubnetRepository subnetRepository,
           IMasterDataRepository masterDataRepository,
-          ISubnetIpRepository subnetIpRepository
+          ISubnetIpRepository subnetIpRepository,
+          ISubnetIPHistoryRepository subnetIPHistoryRepository
           ) : base()
         {
             _mapper = mapper;
             _subnetRepository = subnetRepository;
             _masterDataRepository = masterDataRepository;
             _subnetIpRepository = subnetIpRepository;
+            _subnetIPHistoryRepository = subnetIPHistoryRepository;
         }
 
         public async Task<Guid> AddSubnet(SubnetDto subnetDto)
@@ -75,6 +79,43 @@ namespace IPAM_Api.Services
         }
 
 
+        public async Task<bool> UpdateSubnet(SubnetDto subnetDto)
+        {
+            Subnet subnet = await _subnetRepository.GetSubnetsById(subnetDto.SubnetId);
+            if (subnet != null)
+            {
+                subnet.SubnetGroupId = (Guid)subnetDto.SubnetGroupId;
+                subnet.Alert = subnetDto.Alert;
+                subnet.Warning = subnetDto.Warning;
+                subnet.Critical = subnetDto.Critical;
+                subnet.Email = subnetDto.Email;
+                subnet.SubnetName = subnetDto.SubnetName;
+                subnet.SubnetDescription = subnetDto.SubnetDescription;
+                subnet.VlanName = subnetDto.VlanName;
+                subnet.Location = subnetDto.Location;
+
+                await _subnetRepository.UpdateSubnetDetail(subnet);
+                return true;
+            }            
+
+            return false;
+        }
+
+        public async Task<SubnetDto> GetSubnetDetailBySubnetId(Guid subnetId)
+        {
+            Subnet subnet = await _subnetRepository.GetSubnetsById(subnetId);
+            if (subnet == null)
+            {
+                throw new ValidationException("Subnet detail not found");
+            }
+
+            SubnetDto subnetDto = _mapper.Map<SubnetDto>(subnet);
+            subnetDto.SubnetIpList = _mapper.Map<List<SubnetIPDetailDto>>(await _subnetIpRepository.GetIpListBySubnetId(subnet.SubnetId));
+
+            return subnetDto;
+        }
+
+
         public async Task<List<TracertResponseDto>> TraceRoute(string ipAddress)
         {
             List<TracertResponseDto> tracertResponse = new List<TracertResponseDto>();
@@ -116,6 +157,38 @@ namespace IPAM_Api.Services
             return SubnetIpList;
         }
 
+        public async Task<List<SubnetDetailDto>> GetSubnetsByGroupId(Guid subnetGroupId)
+        {
+            List<SubnetDetailDto> subnetDetailList = new List<SubnetDetailDto>();
+            List<Subnet> subnets = await _subnetRepository.GetSubnetsByGroupId(subnetGroupId);
+
+            foreach (var subnet in subnets)
+            {
+                List<SubnetIP> subnetIps = await _subnetIpRepository.GetIpListBySubnetId(subnet.SubnetId);
+
+                if (subnetIps.Count > 0)
+                {
+                    subnetDetailList.Add(new SubnetDetailDto()
+                    {
+                        SubnetId = subnet.SubnetId,
+                        SubnetGroupId = subnet.SubnetGroupId,
+                        SubnetMaskId = subnet.SubnetMaskId,
+                        SubnetAddress = subnet.SubnetAddress,
+                        SubnetName = subnet.SubnetName,
+                        SubnetSize = subnetIps.Count,
+                        SubnetUsage = (subnetIps.Where(x => x.Status == "Used").ToList().Count() * 100 / subnetIps.Count),
+                        ScanStatus = "Scanned",
+                        Available = subnetIps.Where(x => x.Status != "Used" || x.Status != "Transient").ToList().Count(),
+                        Used = subnetIps.Where(x => x.Status == "Used").ToList().Count(),
+                        Transient = subnetIps.Where(x => x.Status == "Transient").ToList().Count(),
+                        LastScanTime = DateTime.Now,
+                    });
+                }
+            }
+
+            return subnetDetailList;
+        }
+
         public async Task<SubnetIPDetailDto> ScanAndUpdateSubnetIpDetail(Guid subnetIpId)
         {
             SubnetIP subnetIP = await _subnetIpRepository.GetSubnetIpDetailById(subnetIpId);
@@ -130,6 +203,17 @@ namespace IPAM_Api.Services
             }
 
             subnetIP = await _subnetIpRepository.GetSubnetIpDetailById(subnetIpId);
+
+            await _subnetIPHistoryRepository.Create(new SubnetIPHistory() { 
+                SubnetIPId = subnetIP.SubnetIPId,
+                SubnetId = subnetIP.SubnetId,
+                IPAddress = subnetIP.IPAddress,
+                DNSName = "",
+                MacAddress = subnetIP.MacAddress,
+                DeviceType = subnetIP.DeviceType,
+                DetectedTime = DateTime.Now,
+                SysDescription = "test"
+            });
 
             return _mapper.Map<SubnetIPDetailDto>(subnetIP);
         }
@@ -153,6 +237,11 @@ namespace IPAM_Api.Services
             subnetIP = await _subnetIpRepository.GetSubnetIpDetailById(subnetIPDetail.SubnetIPId);
 
             return _mapper.Map<SubnetIPDetailDto>(subnetIP);
+        }
+
+        public async Task<List<SubnetIPHistory>> GetIpHistoryBySubnetId(Guid subnetId)
+        {
+            return await _subnetIPHistoryRepository.GetIpHistoryBySubnetId(subnetId);
         }
     }
 }

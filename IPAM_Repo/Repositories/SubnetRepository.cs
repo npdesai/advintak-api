@@ -23,6 +23,11 @@ namespace IPAM_Repo.Repositories
             return await _dbContext.Subnet.Where(s=>s.SubnetGroupId == subnetGroupId).ToListAsync();
         }
 
+        public async Task<Subnet> GetSubnetsById(Guid subnetId)
+        {
+            return await _dbContext.Subnet.FirstOrDefaultAsync(s => s.SubnetId == subnetId);
+        }
+
         public async Task<Guid> Create(Subnet subnet)
         {
             if (subnet.SubnetAddress == null)
@@ -34,6 +39,14 @@ namespace IPAM_Repo.Repositories
             await _dbContext.SaveChangesAsync();
 
             return subnet.SubnetId;
+        }
+
+        public async Task<bool> UpdateSubnetDetail(Subnet subnet)
+        {
+            _dbContext.Entry(subnet).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
+
+            return true;
         }
     }
 }

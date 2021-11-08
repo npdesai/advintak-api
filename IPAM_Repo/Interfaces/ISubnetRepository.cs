@@ -11,5 +11,7 @@ namespace IPAM_Repo.Interfaces
     {
         Task<Guid> Create(Subnet subnet);
         Task<List<Subnet>> GetSubnetsByGroupId(Guid subnetGroupId);
+        Task<bool> UpdateSubnetDetail(Subnet subnet);
+        Task<Subnet> GetSubnetsById(Guid subnetId);
     }
 }

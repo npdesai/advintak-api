@@ -25,6 +25,19 @@ namespace IPAM_Api.Controllers
         }
 
         /// <summary>
+        /// Subnet Detail
+        /// </summary>
+        /// <param name="subnetId"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(SubnetDto), StatusCodes.Status200OK)]
+        [Route("api/Subnet/GetSubnetDetailBySubnetId", Name = "Subnet Detail By SubnetId")]
+        [HttpGet]
+        public async Task<SubnetDto> GetSubnetDetailBySubnetId(Guid subnetId)
+        {
+            return await _subnetService.GetSubnetDetailBySubnetId(subnetId);
+        }
+
+        /// <summary>
         /// Add Subnet
         /// </summary>
         /// <param name="subnetDto"></param>
@@ -38,16 +51,42 @@ namespace IPAM_Api.Controllers
         }
 
         /// <summary>
+        /// Update Subnet
+        /// </summary>
+        /// <param name="subnetDto"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [Route("api/Subnet/Update", Name = "Update Subnet")]
+        [HttpPost]
+        public async Task<bool> UpdateSubnet(SubnetDto subnetDto)
+        {
+            return await _subnetService.UpdateSubnet(subnetDto);
+        }
+
+        /// <summary>
         /// SubnetIpList
         /// </summary>
         /// <param name="subnetId"></param>
         /// <returns></returns>
-        [ProducesResponseType(typeof(SubnetIP), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<SubnetIP>), StatusCodes.Status200OK)]
         [Route("api/Subnet/SubnetIpList", Name = "SubnetIpList")]
         [HttpGet]
         public async Task<List<SubnetIP>> GetSubnetIpList(Guid subnetId)
         {
             return await _subnetService.GetSubnetIPs(subnetId);
+        }
+
+        /// <summary>
+        /// Subnets By GroupId
+        /// </summary>
+        /// <param name="subnetGroupId"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(List<SubnetDetailDto>), StatusCodes.Status200OK)]
+        [Route("api/Subnet/GetSubnetListByGroupId", Name = "Subnet List By GroupId")]
+        [HttpGet]
+        public async Task<List<SubnetDetailDto>> GetSubnetListByGroupId(Guid subnetGroupId)
+        {
+            return await _subnetService.GetSubnetsByGroupId(subnetGroupId);
         }
 
         /// <summary>
@@ -117,7 +156,7 @@ namespace IPAM_Api.Controllers
         }
 
         /// <summary>
-        /// Add IPV6 Subnet Detail
+        /// Get IPV6 Subnet Detail List
         /// </summary>
         /// <param name="iPV6SubnetId"></param>
         /// <returns></returns>
@@ -140,6 +179,19 @@ namespace IPAM_Api.Controllers
         public async Task<IPV6SubnetDetailDto> UpdateIPV6DetailById(IPV6SubnetDetailDto iPV6SubnetDetail)
         {
             return await _iPV6SubnetService.UpdateIPV6SubnetDetail(iPV6SubnetDetail);
+        }
+
+        /// <summary>
+        /// Get Subnet History
+        /// </summary>
+        /// <param name="subnetId"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(List<SubnetIPHistory>), StatusCodes.Status200OK)]
+        [Route("api/Subnet/GetSubnetHistory", Name = "Get Subnet History")]
+        [HttpGet]
+        public async Task<List<SubnetIPHistory>> GetSubnetHistory(Guid subnetId)
+        {
+            return await _subnetService.GetIpHistoryBySubnetId(subnetId);
         }
     }
 }

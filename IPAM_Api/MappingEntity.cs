@@ -24,6 +24,7 @@ namespace IPAM_Api
             CreateMap<Device, DeviceDto>().ReverseMap();
             CreateMap<Domain, DomainDto>().ReverseMap();
             CreateMap<IPV6SubnetDetail, IPV6SubnetDetailDto>().ReverseMap();
+            CreateMap<Subnet, SubnetDetailDto>().ReverseMap();
         }
     }
 }

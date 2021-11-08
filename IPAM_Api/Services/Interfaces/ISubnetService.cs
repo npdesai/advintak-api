@@ -14,6 +14,10 @@ namespace IPAM_Api.Services.Interfaces
         Task<PingReplyDto> Ping(string ipAddress);
         Task<List<SubnetIP>> GetSubnetIPs(Guid subnetId);
         Task<SubnetIPDetailDto> ScanAndUpdateSubnetIpDetail(Guid subnetIpId);
-        Task<SubnetIPDetailDto> UpdateSubnetIpDetail(SubnetIPDetailDto subnetIPDetail);
+        Task<SubnetIPDetailDto> UpdateSubnetIpDetail(SubnetIPDetailDto subnetIPDetail);        
+        Task<bool> UpdateSubnet(SubnetDto subnetDto);
+        Task<SubnetDto> GetSubnetDetailBySubnetId(Guid subnetId);
+        Task<List<SubnetDetailDto>> GetSubnetsByGroupId(Guid subnetGroupId);
+        Task<List<SubnetIPHistory>> GetIpHistoryBySubnetId(Guid subnetId);
     }
 }
