@@ -32,13 +32,18 @@ namespace IPAM_Common.DTOs.Subnet
         public string SubnetGroupName { get; set; }
         public string SubnetAddress { get; set; }
         public Guid SubnetMaskId { get; set; }
+        public string SubnetMask { get; set; }
         public string SubnetName { get; set; }
         public int SubnetSize { get; set; }
         public int SubnetUsage { get; set; }
         public string ScanStatus { get; set; }
         public int Available { get; set; }
+        public int NotReachable { get; set; }
         public int Used { get; set; }
         public int Transient { get; set; }
         public DateTime LastScanTime { get; set; }
+        public string VlanName { get; set; }
+        public string Location { get; set; }
+        public string Description { get; set; }        
     }
 }

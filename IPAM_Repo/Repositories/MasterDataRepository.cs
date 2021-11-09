@@ -21,6 +21,11 @@ namespace IPAM_Repo.Repositories
             return await _dbContext.SubnetGroup.ToListAsync();
         }
 
+        public async Task<SubnetGroup> GetSubnetGroupById(Guid groupId)
+        {
+            return await _dbContext.SubnetGroup.FirstOrDefaultAsync(x=>x.GroupId == groupId);
+        }
+
         public async Task<List<SubnetMask>> GetSubnetMasks()
         {
             return await _dbContext.SubnetMask.ToListAsync();

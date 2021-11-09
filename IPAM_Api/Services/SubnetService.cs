@@ -192,6 +192,44 @@ namespace IPAM_Api.Services
             return subnetDetailList;
         }
 
+        public async Task<SubnetDetailDto> GetSubnetSummary(Guid subnetId)
+        {
+            SubnetDetailDto subnetSummary = new SubnetDetailDto();
+            Subnet subnet = await _subnetRepository.GetSubnetsById(subnetId);
+
+            if(subnet != null)
+            {
+                List<SubnetIP> subnetIps = await _subnetIpRepository.GetIpListBySubnetId(subnet.SubnetId);
+
+                if (subnetIps.Count > 0)
+                {
+                    subnetSummary = new SubnetDetailDto()
+                    {
+                        SubnetId = subnet.SubnetId,
+                        SubnetGroupId = subnet.SubnetGroupId,
+                        SubnetGroupName = _masterDataRepository.GetSubnetGroupById(subnet.SubnetGroupId).Result.GroupName,
+                        SubnetMaskId = subnet.SubnetMaskId,
+                        SubnetMask = _masterDataRepository.GetSubnetMasksById(subnet.SubnetMaskId).Result.NetMask,
+                        SubnetAddress = subnet.SubnetAddress,
+                        SubnetName = subnet.SubnetName,
+                        SubnetSize = subnetIps.Count,
+                        SubnetUsage = (subnetIps.Where(x => x.Status == "Used").ToList().Count() * 100 / subnetIps.Count),
+                        ScanStatus = "Scanned",
+                        Available = subnetIps.Where(x => x.Status == "Available" ).ToList().Count(),
+                        Used = subnetIps.Where(x => x.Status == "Used").ToList().Count(),
+                        Transient = subnetIps.Where(x => x.Status == "Transient").ToList().Count(),
+                        NotReachable = subnetIps.Where(x => x.Status == "Not Reachable").ToList().Count(),
+                        LastScanTime = DateTime.Now,
+                        VlanName = subnet.VlanName,
+                        Description = subnet.SubnetDescription,
+                        Location = subnet.Location,
+                    };
+                }
+            }
+
+            return subnetSummary;
+        }
+
         public async Task<SubnetIPDetailDto> ScanAndUpdateSubnetIpDetail(Guid subnetIpId)
         {
             SubnetIP subnetIP = await _subnetIpRepository.GetSubnetIpDetailById(subnetIpId);

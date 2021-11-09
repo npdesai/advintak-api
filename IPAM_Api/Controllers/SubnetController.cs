@@ -38,6 +38,19 @@ namespace IPAM_Api.Controllers
         }
 
         /// <summary>
+        /// Subnet Summary
+        /// </summary>
+        /// <param name="subnetId"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(SubnetDetailDto), StatusCodes.Status200OK)]
+        [Route("api/Subnet/GetSubnetSummary", Name = "Subnet Summary By SubnetId")]
+        [HttpGet]
+        public async Task<SubnetDetailDto> GetSubnetSummary(Guid subnetId)
+        {
+            return await _subnetService.GetSubnetSummary(subnetId);
+        }
+
+        /// <summary>
         /// Add Subnet
         /// </summary>
         /// <param name="subnetDto"></param>
