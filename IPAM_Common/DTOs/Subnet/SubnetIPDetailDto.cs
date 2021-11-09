@@ -16,6 +16,9 @@ namespace IPAM_Common.DTOs.Subnet
         public string AliasName { get; set; }
         public string AssetTag { get; set; }
         public string SystemLocation { get; set; }
-        public DateTime LastScan { get; set; }        
+        public DateTime LastScan { get; set; }
+        public string VlanId { get; set; }
+        public string VlanName { get; set; }
+        public string AccessMode { get; set; }
     }
 }

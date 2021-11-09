@@ -3,15 +3,17 @@ using System;
 using IPAM_Repo;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IPAM_Repo.Migrations
 {
     [DbContext(typeof(IPAMDbContext))]
-    partial class IPAMDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211109064905_UpadateSubnetTable")]
+    partial class UpadateSubnetTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -165,9 +167,6 @@ namespace IPAM_Repo.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("AccessMode")
-                        .HasColumnType("text");
-
                     b.Property<int>("Alert")
                         .HasColumnType("integer");
 
@@ -235,9 +234,6 @@ namespace IPAM_Repo.Migrations
                     b.Property<Guid>("SubnetIPId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
-
-                    b.Property<string>("AccessMode")
-                        .HasColumnType("text");
 
                     b.Property<string>("AliasName")
                         .HasColumnType("text");

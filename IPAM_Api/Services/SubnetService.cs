@@ -66,7 +66,10 @@ namespace IPAM_Api.Services
                     SubnetIP subnetIP = new SubnetIP()
                     {
                         IPAddress = string.Join(".", modifyIP, i),
-                        SubnetId = subnetId
+                        SubnetId = subnetId,
+                        VlanId = subnetDto.VlanId,
+                        VlanName = subnetDto.VlanName,
+                        AccessMode = subnetDto.AccessMode
                     };
 
                     await _subnetIpRepository.Create(subnetIP);
@@ -230,6 +233,9 @@ namespace IPAM_Api.Services
                 subnetIP.AssetTag = subnetIPDetail.AssetTag;
                 subnetIP.SystemLocation = subnetIPDetail.SystemLocation;
                 subnetIP.DeviceType = subnetIPDetail.DeviceType;
+                subnetIP.VlanId = subnetIPDetail.VlanId;
+                subnetIP.VlanName = subnetIPDetail.VlanName;
+                subnetIP.AccessMode = subnetIPDetail.AccessMode;
 
                 await _subnetIpRepository.UpdateSubnetIpDetail(subnetIP);
             }

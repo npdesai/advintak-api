@@ -14,12 +14,14 @@ namespace IPAM_Common.DTOs.Subnet
         public Guid SubnetMaskId { get; set; }
         public string SubnetName { get; set; }
         public string SubnetDescription { get; set; }
+        public string VlanId { get; set; }
         public string VlanName { get; set; }
         public string Location { get; set; }
         public int Alert { get; set; }
         public int Warning { get; set; }
         public int Critical { get; set; }
         public string Email { get; set; }
+        public string AccessMode { get; set; }
         public List<SubnetIPDetailDto> SubnetIpList { get; set; }
     }
 
