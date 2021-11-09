@@ -57,7 +57,7 @@ namespace IPAM_Api.Controllers
         /// <returns></returns>
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [Route("api/Subnet/Update", Name = "Update Subnet")]
-        [HttpPost]
+        [HttpPatch]
         public async Task<bool> UpdateSubnet(SubnetDto subnetDto)
         {
             return await _subnetService.UpdateSubnet(subnetDto);
