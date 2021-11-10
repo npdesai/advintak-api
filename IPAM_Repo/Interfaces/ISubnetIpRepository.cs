@@ -13,5 +13,6 @@ namespace IPAM_Repo.Interfaces
         Task<List<SubnetIP>> GetIpListBySubnetId(Guid subnetId);
         Task<bool> UpdateSubnetIpDetail(SubnetIP subnetIP);
         Task<SubnetIP> GetSubnetIpDetailById(Guid Id);
+        Task<bool> DeleteBySubnetId(List<SubnetIP> subnetIPs);
     }
 }

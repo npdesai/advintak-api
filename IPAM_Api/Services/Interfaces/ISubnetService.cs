@@ -20,5 +20,6 @@ namespace IPAM_Api.Services.Interfaces
         Task<List<SubnetDetailDto>> GetSubnetsByGroupId(Guid subnetGroupId);
         Task<List<SubnetIPHistory>> GetIpHistoryBySubnetId(Guid subnetId);
         Task<SubnetDetailDto> GetSubnetSummary(Guid subnetId);
+        Task<bool> DeleteSubnet(Guid subnetId);
     }
 }

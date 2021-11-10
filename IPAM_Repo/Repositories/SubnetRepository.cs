@@ -48,5 +48,13 @@ namespace IPAM_Repo.Repositories
 
             return true;
         }
+
+        public async Task<bool> Delete(Subnet subnet)
+        {
+            _dbContext.Subnet.Remove(subnet);
+            await _dbContext.SaveChangesAsync();
+
+            return true;
+        }
     }
 }

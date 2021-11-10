@@ -287,5 +287,23 @@ namespace IPAM_Api.Services
         {
             return await _subnetIPHistoryRepository.GetIpHistoryBySubnetId(subnetId);
         }
+
+        public async Task<bool> DeleteSubnet(Guid subnetId)
+        {
+            Subnet subnet = await _subnetRepository.GetSubnetsById(subnetId);
+
+            if (subnet != null)
+            {
+                List<SubnetIP> subnetIps = await _subnetIpRepository.GetIpListBySubnetId(subnet.SubnetId);
+                if (subnetIps.Count > 0)
+                {
+                    await _subnetIpRepository.DeleteBySubnetId(subnetIps);
+                }
+                
+                return await _subnetRepository.Delete(subnet);
+            }
+
+            return false;
+        }
     }
 }

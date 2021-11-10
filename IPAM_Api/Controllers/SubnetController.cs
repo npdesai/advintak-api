@@ -206,5 +206,18 @@ namespace IPAM_Api.Controllers
         {
             return await _subnetService.GetIpHistoryBySubnetId(subnetId);
         }
+
+        /// <summary>
+        /// Get Delete Subnet
+        /// </summary>
+        /// <param name="subnetId"></param>
+        /// <returns></returns>
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [Route("api/Subnet/DeleteSubnet", Name = "Delete Subnet")]
+        [HttpDelete]
+        public async Task<bool> DeleteSubnet(Guid subnetId)
+        {
+            return await _subnetService.DeleteSubnet(subnetId);
+        }
     }
 }

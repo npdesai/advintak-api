@@ -47,5 +47,13 @@ namespace IPAM_Repo.Repositories
 
             return subnetIP.SubnetId;
         }
+
+        public async Task<bool> DeleteBySubnetId(List<SubnetIP> subnetIPs)
+        {
+            _dbContext.SubnetIP.RemoveRange(subnetIPs);
+            await _dbContext.SaveChangesAsync();
+
+            return true;
+        }
     }
 }
