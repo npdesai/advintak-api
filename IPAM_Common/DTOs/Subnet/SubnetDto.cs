@@ -40,7 +40,7 @@ namespace IPAM_Common.DTOs.Subnet
         public int Available { get; set; }
         public int NotReachable { get; set; }
         public int Used { get; set; }
-        public int Transient { get; set; }
+        public int Quarantine { get; set; }
         public DateTime LastScanTime { get; set; }
         public string VlanName { get; set; }
         public string Location { get; set; }

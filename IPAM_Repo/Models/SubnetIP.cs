@@ -28,5 +28,6 @@ namespace IPAM_Repo.Models
         public string VlanId { get; set; }
         public string VlanName { get; set; }
         public string AccessMode { get; set; }
+        public string ScanStatus { get; set; }
     }
 }

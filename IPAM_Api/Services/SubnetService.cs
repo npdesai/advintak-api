@@ -69,7 +69,8 @@ namespace IPAM_Api.Services
                         SubnetId = subnetId,
                         VlanId = subnetDto.VlanId,
                         VlanName = subnetDto.VlanName,
-                        AccessMode = subnetDto.AccessMode
+                        AccessMode = subnetDto.AccessMode,
+                        ScanStatus="Not Scanned"
                     };
 
                     await _subnetIpRepository.Create(subnetIP);
@@ -116,6 +117,20 @@ namespace IPAM_Api.Services
             subnetDto.SubnetIpList = _mapper.Map<List<SubnetIPDetailDto>>(await _subnetIpRepository.GetIpListBySubnetId(subnet.SubnetId));
 
             return subnetDto;
+        }
+
+
+        public async Task<SubnetIPDetailDto> GetSubnetIpDetailBySubnetIpId(Guid subnetIpId)
+        {
+            SubnetIP subnetIP = await _subnetIpRepository.GetSubnetIpDetailById(subnetIpId);
+            if (subnetIP == null)
+            {
+                throw new ValidationException("Subnet detail not found");
+            }
+
+            SubnetIPDetailDto subnetIPDetailDto = _mapper.Map<SubnetIPDetailDto>(subnetIP);            
+
+            return subnetIPDetailDto;
         }
 
 
@@ -181,9 +196,9 @@ namespace IPAM_Api.Services
                         SubnetSize = subnetIps.Count,
                         SubnetUsage = (subnetIps.Where(x => x.Status == "Used").ToList().Count() * 100 / subnetIps.Count),
                         ScanStatus = "Scanned",
-                        Available = subnetIps.Where(x => x.Status != "Used" || x.Status != "Transient").ToList().Count(),
+                        Available = subnetIps.Where(x => x.Status != "Used" || x.Status != "Quarantine").ToList().Count(),
                         Used = subnetIps.Where(x => x.Status == "Used").ToList().Count(),
-                        Transient = subnetIps.Where(x => x.Status == "Transient").ToList().Count(),
+                        Quarantine = subnetIps.Where(x => x.Status == "Quarantine").ToList().Count(),
                         LastScanTime = DateTime.Now,
                     });
                 }
@@ -217,7 +232,7 @@ namespace IPAM_Api.Services
                         ScanStatus = "Scanned",
                         Available = subnetIps.Where(x => x.Status == "Available" ).ToList().Count(),
                         Used = subnetIps.Where(x => x.Status == "Used").ToList().Count(),
-                        Transient = subnetIps.Where(x => x.Status == "Transient").ToList().Count(),
+                        Quarantine = subnetIps.Where(x => x.Status == "Quarantine").ToList().Count(),
                         NotReachable = subnetIps.Where(x => x.Status == "Not Reachable").ToList().Count(),
                         LastScanTime = DateTime.Now,
                         VlanName = subnet.VlanName,
@@ -239,11 +254,10 @@ namespace IPAM_Api.Services
                 subnetIP.Status = IPHelper.Ping(subnetIP.IPAddress).Result.Status == 0 ? "Used" : "Not Reachable";
                 subnetIP.ConnectedSwitch = GatewayHelper.GetDefaultGatewayIP(subnetIP.IPAddress);
                 subnetIP.LastScan = DateTime.Now;
+                subnetIP.ScanStatus = subnetIP.Status == "Used"? "Scanned": "Not Reachable";
 
                 await _subnetIpRepository.UpdateSubnetIpDetail(subnetIP);
             }
-
-            subnetIP = await _subnetIpRepository.GetSubnetIpDetailById(subnetIpId);
 
             await _subnetIPHistoryRepository.Create(new SubnetIPHistory() { 
                 SubnetIPId = subnetIP.SubnetIPId,

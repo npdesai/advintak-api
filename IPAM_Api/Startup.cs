@@ -46,6 +46,9 @@ namespace IPAM_Api
             {
                 option.AddDefaultPolicy(b =>
                 {
+                    b.WithOrigins("http://nikunj-ipam:8062").AllowAnyHeader().AllowAnyMethod();
+                    b.WithOrigins("http://192.168.15.70:8062").AllowAnyHeader().AllowAnyMethod();
+                    b.WithOrigins("http://localhost:8062").AllowAnyHeader().AllowAnyMethod();
                     b.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
                 });
             });
@@ -76,7 +79,7 @@ namespace IPAM_Api
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IPAM Api"));
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
